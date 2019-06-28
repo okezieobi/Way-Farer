@@ -13,6 +13,6 @@ bookings.
 8. Users can delete their booking.
 
 # Optional Features
-● Users can get a list of filtered trips based on origin.
-● Users can get a list of filtered trips based on destination.
-● Users can specify their seat numbers when making a booking.
+1. Users can get a list of filtered trips based on origin.
+2. Users can get a list of filtered trips based on destination.
+3. Users can specify their seat numbers when making a booking.
