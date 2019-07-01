@@ -1,0 +1,67 @@
+{
+  "name": "way-farer",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.4.1"
+  },
+  "description": "WayFarer is a public bus transportation booking server",
+  "main": "index.js",
+  "scripts": {
+    "views": "browser-sync -s -w",
+    "dev": "nodemon --exec babel-node api/src/index.js",
+    "release": "npm run clean && npm run build-app && npm run start",
+    "clean": "rm -rf api/dist && mkdir api/dist",
+    "build": "npm run clean && npm run build-app",
+    "build-app": "babel api/src -s -d api/dist --presets=@babel/env",
+    "start": "node api/dist/index.js",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "codeClimate": "nyc --reporter=lcov npm test",
+    "test": "mocha --require @babel/register test/test.js --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/okezieobi/Way-Farer.git"
+  },
+  "keywords": [
+    "transportation"
+  ],
+  "author": "Frank OKezie Obiedere",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/okezieobi/Way-Farer/issues"
+  },
+  "homepage": "https://github.com/okezieobi/Way-Farer#readme",
+  "devDependencies": {
+    "@babel/cli": "",
+    "@babel/core": "",
+    "@babel/node": "",
+    "@babel/preset-env": "",
+    "@babel/register": "",
+    "browser-sync": "^2.26.7",
+    "coveralls": "",
+    "eslint": "",
+    "eslint-config-airbnb-base": "",
+    "eslint-plugin-import": "",
+    "mocha": "",
+    "mocha-lcov-reporter": "",
+    "nodemon": "",
+    "nyc": ""
+  },
+  "dependencies": {
+    "@babel/polyfill": "",
+    "bcryptjs": "",
+    "bluebird": "^3.5.4",
+    "body-parser": "",
+    "chai": "",
+    "chai-http": "",
+    "core-js": "",
+    "dotenv": "",
+    "express": "",
+    "jsonwebtoken": "^8.5.1",
+    "pg-promise": "^8.6.5",
+    "regenerator-runtime": "^0.13.2",
+    "unique-random": "^2.1.0"
+  },
+  "heroku-run-build-script": true
+}
