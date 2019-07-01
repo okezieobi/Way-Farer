@@ -4,8 +4,8 @@ psql -U bootcamp47 -d postgres -h 127.0.0.1 -W (linux)
 RUN \i api/src/migrations/database.sql \q
 */
 
-DROP DATABASE IF EXISTS banka;
-CREATE DATABASE banka;
+DROP DATABASE IF EXISTS wayfarer;
+CREATE DATABASE wayfarer;
 
-\c banka
+\c wayfarer
 \i api/src/tables/users.sql 
