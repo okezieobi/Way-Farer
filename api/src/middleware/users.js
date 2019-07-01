@@ -3,10 +3,6 @@ import authenticateUsers from '../auth/users';
 import middleware from './middleware';
 
 export default class Users {
-  static validateClients() {
-    return validateUserRequest.signIn.bind(validateUserRequest);
-  }
-
   static clients(method) {
     const validateAll = validateUserRequest[method].bind(validateUserRequest);
     const authAll = authenticateUsers[method].bind(authenticateUsers);

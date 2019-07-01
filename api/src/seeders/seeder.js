@@ -9,7 +9,7 @@ class Queries {
 }
 
 export default {
-  deleteAll: Queries.sql('../seeders/deleteAll.sql'),
+  deleteAll: Queries.sql('../seeders/delete.sql'),
   users: {
     insertData: Queries.sql('../seeders/users.sql'),
   },
