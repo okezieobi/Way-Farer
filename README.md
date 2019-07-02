@@ -1,3 +1,5 @@
+develop [![Maintainability](https://api.codeclimate.com/v1/badges/3c76f2ec3192c30a5392/maintainability)](https://codeclimate.com/github/okezieobi/Way-Farer/maintainability) [![Maintainability](https://api.codeclimate.com/v1/badges/3c76f2ec3192c30a5392/maintainability)](https://codeclimate.com/github/okezieobi/Way-Farer/maintainability) [![Coverage Status](https://coveralls.io/repos/github/okezieobi/Way-Farer/badge.svg?branch=develop)](https://coveralls.io/github/okezieobi/Way-Farer?branch=develop) [![Build Status](https://travis-ci.com/okezieobi/Way-Farer.svg?branch=develop)](https://travis-ci.com/okezieobi/Way-Farer)
+
 # Way-Farer
 WayFarer is a public bus transportation booking server.
 

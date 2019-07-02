@@ -12,4 +12,8 @@ export default class Users {
   static signupClients() {
     return this.clients('signUp');
   }
+
+  static signinClients() {
+    return this.clients('signIn');
+  }
 }

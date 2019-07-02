@@ -1,9 +1,9 @@
 import database from '../db/pgConnect';
-// import password from '../helpers/bcrypt';
+import password from '../helpers/bcrypt';
 import token from '../helpers/jwt';
-// import authenticateUsers from '../auth/users';
+import authenticateUsers from '../auth/users';
 import protocol from '../helpers/response';
-// import errors from '../helpers/errors';
+import errors from '../helpers/errors';
 import models from '../models/users';
 import queries from '../helpers/queries';
 
@@ -21,10 +21,18 @@ export default class Users {
     return protocol.auth201Res(res, signUpRes, newToken);
   }
 
+  static async signinAll(req, res, userPassword, model) {
+    const { verifyUser } = authenticateUsers;
+    const verifyPassword = await password.compare(verifyUser.password, userPassword);
+    if (!verifyPassword) return protocol.err400Res(res, errors.wrongPassword());
+    const signInRes = await model(verifyUser);
+    const newToken = await token.generate(verifyUser.id);
+    return protocol.auth200Res(res, signInRes, newToken);
+  }
+
   static async signinClients(req, res) {
     const { userPassword } = req.body;
     const userModel = models.createUserDataResPostgre;
-    const signin = this.signinAll(req, res, userPassword, userModel);
-    return signin;
+    return this.signinAll(req, res, userPassword, userModel);
   }
 }
