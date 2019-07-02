@@ -11,32 +11,20 @@ import token from '../api/src/helpers/jwt';
 
 export default class Test {
   static deleteData() {
-    const deleteData = seeder.deleteAll;
-    return deleteData;
+    return seeder.deleteAll;
   }
 
   static users() {
-    const userData = seeder.users.insertData;
-    return userData;
-  }
-
-  static accounts() {
-    const accountsData = seeder.accounts.insertData;
-    return accountsData;
-  }
-
-  static transactions() {
-    const transactionData = seeder.transactions.insertData;
-    return transactionData;
+    return seeder.users.insertData;
   }
 
   static generateToken(id) {
-    const newToken = token.generate(id);
-    return newToken;
+    return token.generate(id);
   }
 }
 
 require('./users/signup');
+require('./users/signin');
 
 export {
   expect,

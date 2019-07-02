@@ -1,5 +1,5 @@
 /*
-Connect to db as bootcamp47 and RUN  \c banka \i src/seeders/users.sql
+Connect to db as bootcamp47 and RUN  \c wayfarer \i api/src/seeders/users.sql
 */
 
 INSERT INTO clients

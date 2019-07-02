@@ -17,4 +17,15 @@ export default class AuthenticateUsers {
   static signUp(req, res, next) {
     return this.signUpAll(req, res, next, 'userEmail', 'findClientByEmail', 'User');
   }
+
+  static async signInAll(req, res, next, query, title, data) {
+    const userData = req.body[data];
+    this.verifyUser = await database.queryOneORNone(queries[query](), [userData]);
+    if (!this.verifyUser) return protocol.err404Res(res, errors.userNotExists(`${title}`));
+    return next();
+  }
+
+  static async signIn(req, res, next) {
+    return this.signInAll(req, res, next, 'findClientByEmail', 'User', 'userEmail');
+  }
 }
