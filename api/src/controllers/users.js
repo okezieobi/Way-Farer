@@ -30,9 +30,15 @@ export default class Users {
     return protocol.auth200Res(res, signInRes, newToken);
   }
 
-  static async signinClients(req, res) {
+  static signinClients(req, res) {
     const { userPassword } = req.body;
     const userModel = models.createUserDataResPostgre;
     return this.signinAll(req, res, userPassword, userModel);
+  }
+
+  static signinAdmin(req, res) {
+    const { adminPassword } = req.body;
+    const adminModel = models.createAdminDataResPostgre;
+    return this.signinAll(req, res, adminPassword, adminModel);
   }
 }

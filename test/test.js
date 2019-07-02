@@ -25,6 +25,7 @@ export default class Test {
 
 require('./users/signup');
 require('./users/signin');
+require('./users/adminSignin');
 
 export {
   expect,

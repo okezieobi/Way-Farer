@@ -25,7 +25,11 @@ export default class AuthenticateUsers {
     return next();
   }
 
-  static async signIn(req, res, next) {
+  static signIn(req, res, next) {
     return this.signInAll(req, res, next, 'findClientByEmail', 'User', 'userEmail');
+  }
+
+  static signinAdmin(req, res, next) {
+    return this.signInAll(req, res, next, 'findAdminByUsername', 'Admin', 'userName');
   }
 }

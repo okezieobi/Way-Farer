@@ -10,4 +10,8 @@ export default class Queries {
   static createClient() {
     return 'INSERT INTO clients(id, first_name, last_name, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING id, first_name, last_name, email, type';
   }
+
+  static findAdminByUsername() {
+    return 'SELECT * FROM admins WHERE username = $1';
+  }
 }

@@ -3,17 +3,21 @@ import authenticateUsers from '../auth/users';
 import middleware from './middleware';
 
 export default class Users {
-  static clients(method) {
+  static users(method) {
     const validateAll = validateUserRequest[method].bind(validateUserRequest);
     const authAll = authenticateUsers[method].bind(authenticateUsers);
     return middleware.routeCallbacks(validateAll, authAll);
   }
 
   static signupClients() {
-    return this.clients('signUp');
+    return this.users('signUp');
   }
 
   static signinClients() {
-    return this.clients('signIn');
+    return this.users('signIn');
+  }
+
+  static signinAdmin() {
+    return this.users('signinAdmin');
   }
 }

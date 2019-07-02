@@ -6,4 +6,6 @@ router.post('/auth/signup', userMiddleware.signupClients(), userController.signU
 
 router.post('/auth/signin', userMiddleware.signinClients(), userController.signinClients.bind(userController));
 
+router.post('/auth/signin/admin', userMiddleware.signinAdmin(), userController.signinAdmin.bind(userController));
+
 export default router;
