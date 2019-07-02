@@ -1,5 +1,5 @@
 /*
-Connect to db as bootcamp47 and RUN  \c wayfarer \i api/src/seeders/users.sql
+Connect to db as bootcamp47 and RUN  \c wayfarer \i api/src/seeders/users.sql \q
 */
 
 INSERT INTO clients
@@ -11,3 +11,14 @@ SELECT
     *
 FROM
     clients;
+
+
+INSERT INTO admins
+    (id, username, "password")
+VALUES
+    (5050505050505, 'obiedere', crypt('AbcDFer123*@is!', gen_salt('bf', 12)));
+
+SELECT
+    *
+FROM
+    admins;

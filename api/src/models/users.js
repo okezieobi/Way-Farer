@@ -24,4 +24,22 @@ export default class Users {
       type: String(data.type),
     };
   }
+
+
+  static createAdminDataResPostgre(data) {
+    return {
+      id: parseInt(data.id, 10),
+      username: String(data.username),
+      type: String(data.type),
+    };
+  }
+
+  static adminDataPostgre(data) {
+    const { userName, adminPassword } = data;
+    return {
+      id: numbers.uniqueIds(),
+      username: String(userName),
+      hashedPassword: bcrypt.hash(String(adminPassword)),
+    };
+  }
 }

@@ -29,4 +29,9 @@ export default class ValidateUserRequest {
     return this.signinPlus(req, res, next, 'userEmail',
       'checkEmailFormat', 'Email', 'userPassword');
   }
+
+  static signinAdmin(req, res, next) {
+    return this.signinPlus(req, res, next, 'userName',
+      'validateUsername', 'Username', 'adminPassword');
+  }
 }
