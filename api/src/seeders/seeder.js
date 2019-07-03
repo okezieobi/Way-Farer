@@ -13,4 +13,13 @@ export default {
   users: {
     insertData: Queries.sql('../seeders/users.sql'),
   },
+  buses: {
+    insertData: Queries.sql('../seeders/buses.sql'),
+  },
+  trips: {
+    insertData: Queries.sql('../seeders/trips.sql'),
+  },
+  bookings: {
+    insertData: Queries.sql('../seeders/bookings.sql'),
+  },
 };
