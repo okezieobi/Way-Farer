@@ -13,7 +13,7 @@ export default class Patterns {
 
   static checkName(name) {
     const nameString = String(name);
-    const namePattern = /^[A-Za-z\s]+$/;
+    const namePattern = /^[A-Za-z]+$/;
     return namePattern.test(nameString);
   }
 
@@ -33,5 +33,11 @@ export default class Patterns {
     const usernameString = String(username);
     const usernamePattern = /^[a-zA-Z0-9\s_-]+$/;
     return usernamePattern.test(usernameString);
+  }
+
+  static validateNumberPlate(numberPlate) {
+    const numberPlateString = String(numberPlate);
+    const numberPlatePattern = /^([A-Z0-9]){8,8}$/;
+    return numberPlatePattern.test(numberPlateString);
   }
 }

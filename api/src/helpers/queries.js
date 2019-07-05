@@ -14,4 +14,12 @@ export default class Queries {
   static findAdminByUsername() {
     return 'SELECT * FROM admins WHERE username = $1';
   }
+
+  static findAdminById() {
+    return 'SELECT * FROM admins WHERE id = $1';
+  }
+
+  static createBus() {
+    return 'INSERT INTO buses(id, number_plate, manufacturer, model, year, capacity ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+  }
 }

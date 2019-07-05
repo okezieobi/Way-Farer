@@ -43,15 +43,15 @@ export default class Errors {
     return `Token provided does not match any ${title}`;
   }
 
-  static wrongMasterToken() {
-    return 'Token provided does not match master admin';
-  }
-
   static invalidToken() {
     return 'Id from token is not a positive integer';
   }
 
   static wrongPassword() {
     return 'Password does not match user';
+  }
+
+  static notNumberPlate() {
+    return 'Number plate must be capital letters and numbers of 8 characters';
   }
 }
