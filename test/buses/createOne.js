@@ -8,7 +8,7 @@ import Test, {
 
 chai.use(chaiHttp);
 
-describe('Test endpoint at "api/v1/buses" to create a bus data as an authenticated Admin with POST', () => {
+describe('Test endpoint at "api/v1/buses" that creates a bus data as an authenticated Admin with POST', () => {
   before(async () => {
     await pool.queryNone(Test.deleteData());
   });

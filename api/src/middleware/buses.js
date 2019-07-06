@@ -8,4 +8,9 @@ export default class Buses {
     const authAdmin = authenticateUsers.admin.bind(authenticateUsers);
     return middleware.routeCallbacks(validate, authAdmin);
   }
+
+  static getAll() {
+    const authAdmin = authenticateUsers.admin.bind(authenticateUsers);
+    return middleware.routeCallbacks(authAdmin);
+  }
 }
