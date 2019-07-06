@@ -18,15 +18,22 @@ export default class Test {
     return seeder.users.insertData;
   }
 
+  static buses() {
+    return seeder.buses.insertData;
+  }
+
   static generateToken(id) {
     return token.generate(id);
   }
 }
 
+/*
 require('./users/signup');
 require('./users/signin');
 require('./users/adminSignin');
 require('./buses/createOne');
+*/
+require('./buses/getAll');
 
 export {
   expect,
