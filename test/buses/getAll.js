@@ -36,7 +36,7 @@ describe('Test endpoint at "api/v1/buses" that gets all bus data as an authentic
     const resData = Math.floor(Math.random() * data.length);
     if (data.length > 0) {
       expect(response.body.data[resData]).to.have.property('id').to.be.a('number');
-      expect(response.body.data[resData]).to.have.property('numberPlate').to.be.a('string');
+      expect(response.body.data[resData]).to.have.property('numberPlate').to.be.a('string').to.be.length(9);
       expect(response.body.data[resData]).to.have.property('manufacturer').to.be.a('string');
       expect(response.body.data[resData]).to.have.property('model').to.be.a('string');
       expect(response.body.data[resData]).to.have.property('year').to.be.a('number');
