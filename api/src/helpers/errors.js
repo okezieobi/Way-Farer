@@ -52,6 +52,6 @@ export default class Errors {
   }
 
   static notNumberPlate() {
-    return 'Number plate must be capital letters and numbers of 8 characters';
+    return 'Number plate must be capital letters and positive integers of exactly 8 characters';
   }
 }

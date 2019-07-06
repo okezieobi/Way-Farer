@@ -1,17 +1,28 @@
 import numbers from '../helpers/uniqueNos';
 
 export default class Buses {
+  static commonBusData(commonData) {
+    const { model, year, capacity } = commonData;
+    return {
+      model: String(model),
+      year: parseInt(year, 10),
+      capacity: parseInt(capacity, 10),
+    };
+  }
+
   static busData(data) {
     const {
-      numberPlate, manufacturer, model, year, capacity,
+      numberPlate, manufacturer,
     } = data;
+    const commonData = this.commonBusData(data);
+    const { model, year, capacity } = commonData;
     return {
       id: numbers.uniqueIds(),
       numberPlate: String(numberPlate),
       manufacturer: String(manufacturer),
-      model: String(model),
-      year: String(year),
-      capacity: parseInt(capacity, 10),
+      model,
+      year,
+      capacity,
     };
   }
 
@@ -21,12 +32,14 @@ export default class Buses {
 
   static busDataRes(data) {
     const {
-      id, manufacturer, model, year, capacity,
+      id, manufacturer,
     } = data;
+    const commonData = this.commonBusData(data);
+    const { model, year, capacity } = commonData;
     return {
-      id,
-      numberPlate: this.numberPlateFormatter(data.number_plate),
-      manufacturer,
+      id: parseInt(id, 10),
+      numberPlate: String(this.numberPlateFormatter(data.number_plate)),
+      manufacturer: String(manufacturer),
       model,
       year,
       capacity,
