@@ -27,12 +27,10 @@ export default class Test {
   }
 }
 
-/*
 require('./users/signup');
 require('./users/signin');
 require('./users/adminSignin');
 require('./buses/createOne');
-*/
 require('./buses/getAll');
 
 export {
