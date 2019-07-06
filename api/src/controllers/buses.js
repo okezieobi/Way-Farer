@@ -15,4 +15,11 @@ export default class Buses {
     const newBusRes = await models.busDataRes(newBusData);
     return protocol.success201Res(res, newBusRes);
   }
+
+  static async getAll(req, res) {
+    const getAllBusesQuery = queries.getAllBuses();
+    const allBuses = await database.queryAny(getAllBusesQuery);
+    const allBusesRes = await models.busDataArray(allBuses);
+    return protocol.success200Res(res, allBusesRes);
+  }
 }

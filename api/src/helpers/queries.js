@@ -22,4 +22,8 @@ export default class Queries {
   static createBus() {
     return 'INSERT INTO buses(id, number_plate, manufacturer, model, year, capacity ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
   }
+
+  static getAllBuses() {
+    return 'SELECT * FROM buses';
+  }
 }

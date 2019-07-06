@@ -45,4 +45,11 @@ export default class Buses {
       capacity,
     };
   }
+
+  static busDataArray(array) {
+    if (array) {
+      return array.map(data => this.busDataRes(data));
+    }
+    return array;
+  }
 }
