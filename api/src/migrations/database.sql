@@ -8,4 +8,7 @@ DROP DATABASE IF EXISTS wayfarer;
 CREATE DATABASE wayfarer;
 
 \c wayfarer
-\i api/src/tables/users.sql 
+\i api/src/tables/users.sql
+\i api/src/tables/buses.sql
+\i api/src/tables/trips.sql
+\i api/src/tables/bookings.sql 

@@ -1,9 +1,9 @@
 import protocol from '../helpers/response';
 import database from '../db/pgConnect';
 import errors from '../helpers/errors';
-// import test from '../helpers/regex';
+import test from '../helpers/regex';
 import queries from '../helpers/queries';
-// import jwt from '../helpers/jwt';
+import jwt from '../helpers/jwt';
 
 export default class AuthenticateUsers {
   static async signUpAll(req, res, next, userData, findUserQuery, userTitle) {
@@ -31,5 +31,22 @@ export default class AuthenticateUsers {
 
   static signinAdmin(req, res, next) {
     return this.signInAll(req, res, next, 'findAdminByUsername', 'Admin', 'userName');
+  }
+
+  static async authenticateAll(req, res, next, tokenTitle, query, title) {
+    const token = req.headers[tokenTitle];
+    if (!token) return protocol.err400Res(res, errors.tokenIsRequired());
+    const verifyToken = await jwt.verify(token);
+    // @ts-ignore
+    const { userId } = verifyToken;
+    const checkId = await test.checkInteger(userId);
+    if (!checkId) return protocol.err400Res(res, errors.invalidToken());
+    this.findUser = await database.queryOneORNone(queries[query](), [userId]);
+    if (!this.findUser) return protocol.err404Res(res, errors.wrongToken([title]));
+    return next();
+  }
+
+  static admin(req, res, next) {
+    return this.authenticateAll(req, res, next, 'admin-token', 'findAdminById', 'admin');
   }
 }
