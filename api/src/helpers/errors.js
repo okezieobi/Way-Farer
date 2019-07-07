@@ -54,4 +54,8 @@ export default class Errors {
   static notNumberPlate() {
     return 'Number plate must be capital letters and positive integers of exactly 8 characters';
   }
+
+  static dataNotFound(title) {
+    return `${title} not found`;
+  }
 }
