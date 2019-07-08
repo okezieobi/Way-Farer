@@ -10,10 +10,10 @@ export default class Trips {
     const { id } = findBus;
     const reqData = await models.tripData(req.body, id);
     const {
-      tripId, busId, origin, destination, fare,
+      tripId, busId, origin, destination, fare, tripDate,
     } = reqData;
     const createTripQuery = queries.createTrip();
-    const arrayData = [tripId, busId, origin, destination, fare];
+    const arrayData = [tripId, busId, origin, destination, fare, tripDate];
     const createTrip = await database.queryOne(createTripQuery, arrayData);
     const newTripRes = await models.tripDataRes(createTrip);
     return protocol.success201Res(res, newTripRes);

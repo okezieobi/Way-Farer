@@ -58,4 +58,16 @@ export default class Errors {
   static dataNotFound(title) {
     return `${title} not found`;
   }
+
+  static dataFound(title) {
+    return `${title} already exists`;
+  }
+
+  static notDate() {
+    return 'Provided trip date must be written in YYYY-MM-DD format';
+  }
+
+  static tripDateErr() {
+    return 'Provided trip date must be at least 24hours after the last trip for a bus';
+  }
 }
