@@ -27,6 +27,10 @@ export default class Queries {
     return 'SELECT * FROM buses';
   }
 
+  static getAllTrips() {
+    return 'SELECT * FROM trips';
+  }
+
   static createTrip() {
     return 'INSERT INTO trips(id, bus_id, origin, destination, fare, trip_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
   }

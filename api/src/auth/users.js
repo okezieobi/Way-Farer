@@ -49,4 +49,8 @@ export default class AuthenticateUsers {
   static admin(req, res, next) {
     return this.authenticateAll(req, res, next, 'admin-token', 'findAdminById', 'admin');
   }
+
+  static client(req, res, next) {
+    return this.authenticateAll(req, res, next, 'client-token', 'findClientById', 'client');
+  }
 }

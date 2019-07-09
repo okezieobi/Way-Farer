@@ -18,4 +18,11 @@ export default class Trips {
     const newTripRes = await models.tripDataRes(createTrip);
     return protocol.success201Res(res, newTripRes);
   }
+
+  static async getAll(req, res) {
+    const getAllTripsQuery = queries.getAllTrips();
+    const allTrips = await database.queryAny(getAllTripsQuery);
+    const allTripsRes = await models.tripDataArray(allTrips);
+    return protocol.success200Res(res, allTripsRes);
+  }
 }
