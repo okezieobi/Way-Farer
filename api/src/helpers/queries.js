@@ -20,10 +20,22 @@ export default class Queries {
   }
 
   static createBus() {
-    return 'INSERT INTO buses(id, number_plate, manufacturer, model, year, capacity ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+    return 'INSERT INTO buses(id, number_plate, manufacturer, model, year, capacity) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
   }
 
   static getAllBuses() {
     return 'SELECT * FROM buses';
+  }
+
+  static createTrip() {
+    return 'INSERT INTO trips(id, bus_id, origin, destination, fare, trip_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+  }
+
+  static findBusByNumberPlate() {
+    return 'SELECT * FROM buses WHERE number_plate = $1';
+  }
+
+  static findTripsByBusId() {
+    return 'SELECT * FROM trips WHERE bus_id = $1 ORDER BY trip_date DESC LIMIT 1';
   }
 }

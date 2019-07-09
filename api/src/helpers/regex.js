@@ -13,7 +13,7 @@ export default class Patterns {
 
   static checkName(name) {
     const nameString = String(name);
-    const namePattern = /^[A-Za-z]+$/;
+    const namePattern = /^[A-Za-z\s]+$/;
     return namePattern.test(nameString);
   }
 
@@ -39,5 +39,11 @@ export default class Patterns {
     const numberPlateString = String(numberPlate);
     const numberPlatePattern = /^([A-Z0-9]){8,8}$/;
     return numberPlatePattern.test(numberPlateString);
+  }
+
+  static checkDateInput(date) {
+    const dateString = String(date);
+    const datePattern = /([12]\d{3}\/(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01]))/;
+    return datePattern.test(dateString);
   }
 }

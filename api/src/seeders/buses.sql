@@ -11,7 +11,7 @@ VALUES
 INSERT INTO buses
     (id, number_plate, manufacturer, model, "year", capacity)
 VALUES
-    (6060606060606, 'STR101AG', 'toyota', 'hiace', '2010', 14);
+    (6060606060606, 'GHI101AG', 'toyota', 'hiace', '2010', 14);
 
 SELECT
     *

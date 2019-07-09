@@ -154,6 +154,22 @@ describe('Test endpoint at "api/v1/buses" that creates a bus data as an authenti
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Number plate must be capital letters and positive integers of exactly 8 characters');
   });
 
+  it('Should not create a bus data at "api/v1/buses" as an authenticated Admin with POST if number plate already exists', async () => {
+    const testData = {
+      numberPlate: 'ERT99948',
+      manufacturer: 'toyota',
+      model: 'sienna',
+      year: 2010,
+      capacity: 8,
+    };
+    const token = await Test.generateToken('5050505050505');
+    const response = await chai.request(app).post('/api/v1/buses').set('admin-token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Bus data with number plate already exists');
+  });
+
   it('Should not create a bus data at "api/v1/buses" as an authenticated Admin with POST if manufacturer is an empty string', async () => {
     const testData = {
       numberPlate: 'ERT99948',
@@ -217,7 +233,7 @@ describe('Test endpoint at "api/v1/buses" that creates a bus data as an authenti
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Manufacturer is required');
   });
 
-  it('Should not create a bus data at "api/v1/buses" as an authenticated Admin with POST if manufacturer does not contain only letters', async () => {
+  it('Should not create a bus data at "api/v1/buses" as an authenticated Admin with POST if manufacturer does not contain case insensitive letters', async () => {
     const testData = {
       numberPlate: 'ERT99948',
       manufacturer: '99990$%$',

@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS buses;
 CREATE TABLE buses
 (
     id           bigint       PRIMARY KEY NOT NULL,
-    number_plate varchar(128) NOT NULL,
+    number_plate varchar(128) NOT NULL UNIQUE,
     manufacturer varchar(128) NOT NULL,
     model        varchar(128) NOT NULL,
     "year"       varchar(128) NOT NULL,

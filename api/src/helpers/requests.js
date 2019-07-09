@@ -22,7 +22,8 @@ export default class RequestCheck {
 
   static checkAllErrors(request, title, test, error) {
     let testErrMessage;
-    const isErrExceptions = error === 'notEmail' || error === 'notPassword' || error === 'notNumberPlate';
+    const isErrExceptions = error === 'notEmail'
+      || error === 'notPassword' || error === 'notNumberPlate' || error === 'notDate';
     if (isErrExceptions) testErrMessage = errors[error]();
     else testErrMessage = errors[error](title);
     const testRequest = regexTest[test](request);
@@ -56,5 +57,9 @@ export default class RequestCheck {
 
   static validateNumberPlate(request, title) {
     return this.checkAllErrors(request, title, 'validateNumberPlate', 'notNumberPlate');
+  }
+
+  static validateDate(request, title) {
+    return this.checkAllErrors(request, title, 'checkDateInput', 'notDate');
   }
 }
