@@ -44,7 +44,7 @@ describe('Test endpoint at "api/v1/buses" that gets all bus data as an authentic
     }
   });
 
-  it('Should not get all bus data "api/v1/buses" as an authenticated Admin with GET if token is an empty string', async () => {
+  it('Should not get all bus data at "api/v1/buses" as an authenticated Admin with GET if token is an empty string', async () => {
     const token = '';
     const response = await chai.request(app).get('/api/v1/buses').set('admin-token', token);
     expect(response).to.have.status(400);
@@ -53,7 +53,7 @@ describe('Test endpoint at "api/v1/buses" that gets all bus data as an authentic
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token is required, please sign in or sign up');
   });
 
-  it('Should not get all bus data "api/v1/buses" as an authenticated Admin with GET if token is not sent', async () => {
+  it('Should not get all bus data at "api/v1/buses" as an authenticated Admin with GET if token is not sent', async () => {
     const response = await chai.request(app).get('/api/v1/buses');
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
@@ -61,7 +61,7 @@ describe('Test endpoint at "api/v1/buses" that gets all bus data as an authentic
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token is required, please sign in or sign up');
   });
 
-  it('Should not get all bus data "api/v1/buses" as an authenticated Admin with GET if token does not match admin', async () => {
+  it('Should not get all bus data at "api/v1/buses" as an authenticated Admin with GET if token does not match admin', async () => {
     const token = await Test.generateToken('5050505059845');
     const response = await chai.request(app).get('/api/v1/buses').set('admin-token', token);
     expect(response).to.have.status(404);
@@ -70,7 +70,7 @@ describe('Test endpoint at "api/v1/buses" that gets all bus data as an authentic
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token provided does not match any admin');
   });
 
-  it('Should not get all bus data "api/v1/buses" as an authenticated Admin with GET if id from token is a negative integer', async () => {
+  it('Should not get all bus data at "api/v1/buses" as an authenticated Admin with GET if id from token is a negative integer', async () => {
     const token = await Test.generateToken('-5050505050505');
     const response = await chai.request(app).get('/api/v1/buses').set('admin-token', token);
     expect(response).to.have.status(400);
@@ -79,7 +79,7 @@ describe('Test endpoint at "api/v1/buses" that gets all bus data as an authentic
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Id from token is not a positive integer');
   });
 
-  it('Should not get all bus data "api/v1/buses" as an authenticated Admin with GET if id from token is a negative floating point number', async () => {
+  it('Should not get all bus data at "api/v1/buses" as an authenticated Admin with GET if id from token is a negative floating point number', async () => {
     const token = await Test.generateToken('-505050.5050505');
     const response = await chai.request(app).get('/api/v1/buses').set('admin-token', token);
     expect(response).to.have.status(400);
@@ -88,7 +88,7 @@ describe('Test endpoint at "api/v1/buses" that gets all bus data as an authentic
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Id from token is not a positive integer');
   });
 
-  it('Should not get all bus data "api/v1/buses" as an authenticated Admin with GET if id from token is a floating point number', async () => {
+  it('Should not get all bus data at "api/v1/buses" as an authenticated Admin with GET if id from token is a floating point number', async () => {
     const token = await Test.generateToken('505050.5050505');
     const response = await chai.request(app).get('/api/v1/buses').set('admin-token', token);
     expect(response).to.have.status(400);
