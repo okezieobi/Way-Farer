@@ -233,7 +233,7 @@ describe('Test endpoint at "api/v1/buses" that creates a bus data as an authenti
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Manufacturer is required');
   });
 
-  it('Should not create a bus data at "api/v1/buses" as an authenticated Admin with POST if manufacturer does not contain only letters', async () => {
+  it('Should not create a bus data at "api/v1/buses" as an authenticated Admin with POST if manufacturer does not contain case insensitive letters', async () => {
     const testData = {
       numberPlate: 'ERT99948',
       manufacturer: '99990$%$',

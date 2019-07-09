@@ -1,21 +1,21 @@
 export default class Protocol {
   static response(res, codeStatus, resKey, resValue) {
-    const errRes = {
+    const response = {
       status: codeStatus,
       [resKey]: resValue,
     };
-    res.status(codeStatus).send(errRes);
+    res.status(codeStatus).send(response);
   }
 
   static authResponse(res, codeStatus, resKey, resValue, token) {
-    const errRes = {
+    const response = {
       status: codeStatus,
       [resKey]: resValue,
       headers: {
         'access-token': token,
       },
     };
-    res.status(codeStatus).set(errRes.headers).send(errRes);
+    res.status(codeStatus).set(response.headers).send(response);
   }
 
   static err400Res(res, err400Message) {

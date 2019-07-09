@@ -36,6 +36,6 @@ export default class Queries {
   }
 
   static findTripsByBusId() {
-    return 'SELECT * FROM trips WHERE bus_id = $1 ORDER BY trip_date DESC';
+    return 'SELECT * FROM trips WHERE bus_id = $1 ORDER BY trip_date DESC LIMIT 1';
   }
 }

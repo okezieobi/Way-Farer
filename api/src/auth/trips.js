@@ -17,9 +17,11 @@ export default class {
     const findTripsByBusIdQuery = queries.findTripsByBusId();
     const { id } = this.findBus;
     const findTripsByBusId = await database.queryAny(findTripsByBusIdQuery, [id]);
-    const lastTripDateOfBus = findTripsByBusId[0].trip_date;
+    let lastTripDateOfBus;
+    if (findTripsByBusId[0]) lastTripDateOfBus = findTripsByBusId[0].trip_date;
+    else lastTripDateOfBus = 0;
     const tripDateDiff = new Date(tripDate) - lastTripDateOfBus;
-    if (tripDateDiff < 86400000) protocol.err400Res(res, errors.tripDateErr());
+    if (tripDateDiff <= 43200000) protocol.err400Res(res, errors.tripDateErr());
     else next();
   }
 }
