@@ -11,4 +11,9 @@ export default class Trips {
     const authTripDate = authenticateTrip.verifyTripDate.bind(authenticateTrip);
     return middleware.routeCallbacks(validate, authAdmin, authBus, authTripDate);
   }
+
+  static getAll(user) {
+    const authUser = authenticateUsers[user].bind(authenticateUsers);
+    return middleware.routeCallbacks(authUser);
+  }
 }

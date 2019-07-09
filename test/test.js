@@ -22,6 +22,10 @@ export default class Test {
     return seeder.buses.insertData;
   }
 
+  static trips() {
+    return seeder.trips.insertData;
+  }
+
   static generateToken(id) {
     return token.generate(id);
   }
@@ -33,6 +37,7 @@ require('./users/adminSignin');
 require('./buses/createOne');
 require('./buses/getAll');
 require('./trips/createOne');
+require('./trips/getAll');
 
 export {
   expect,

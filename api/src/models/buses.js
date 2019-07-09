@@ -1,4 +1,5 @@
 import numbers from '../helpers/uniqueNos';
+import commonModel from './model';
 
 export default class Buses {
   static commonBusData(commonData) {
@@ -34,11 +35,11 @@ export default class Buses {
     const {
       id, manufacturer,
     } = data;
-    const commonData = this.commonBusData(data);
+    const commonData = Buses.commonBusData(data);
     const { model, year, capacity } = commonData;
     return {
       id: parseInt(id, 10),
-      numberPlate: String(this.numberPlateFormatter(data.number_plate)),
+      numberPlate: String(Buses.numberPlateFormatter(data.number_plate)),
       manufacturer: String(manufacturer),
       model,
       year,
@@ -48,7 +49,7 @@ export default class Buses {
 
   static busDataArray(array) {
     if (array) {
-      return array.map(data => this.busDataRes(data));
+      return commonModel.modifyArray(array, this.busDataRes);
     }
     return array;
   }

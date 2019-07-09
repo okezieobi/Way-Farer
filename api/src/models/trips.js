@@ -1,4 +1,5 @@
 import numbers from '../helpers/uniqueNos';
+import commonModel from './model';
 
 export default class Trips {
   static commonTripData(commonData) {
@@ -30,7 +31,7 @@ export default class Trips {
 
   static tripDataRes(data) {
     const { id } = data;
-    const busData = this.commonTripData(data);
+    const busData = Trips.commonTripData(data);
     const {
       origin, destination, fare,
     } = busData;
@@ -42,5 +43,12 @@ export default class Trips {
       destination,
       fare,
     };
+  }
+
+  static tripDataArray(array) {
+    if (array) {
+      return commonModel.modifyArray(array, this.tripDataRes);
+    }
+    return array;
   }
 }
