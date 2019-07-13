@@ -3,7 +3,7 @@ export default class Errors {
     return `${title} is required`;
   }
 
-  static isStringTYpe(title) {
+  static isStringType(title) {
     return `${title} must be string type`;
   }
 

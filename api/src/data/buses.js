@@ -1,12 +1,13 @@
+/* eslint-disable camelcase */
 import protocol from '../helpers/response';
 import checkRequest from '../helpers/requests';
 
 export default class Buses {
   static create(req, res, next) {
     const {
-      numberPlate, manufacturer, model, year, capacity,
+      number_plate, manufacturer, model, year, capacity,
     } = req.body;
-    const numberPlateErr = checkRequest.validateNumberPlate(numberPlate, 'Number plate');
+    const numberPlateErr = checkRequest.validateNumberPlate(number_plate, 'Number plate');
     const manufacturerErr = checkRequest.validateLetters(manufacturer, 'Manufacturer');
     const modelErr = checkRequest.validateLetters(model, 'Model');
     const yearErr = checkRequest.validateInteger(year, 'Year');

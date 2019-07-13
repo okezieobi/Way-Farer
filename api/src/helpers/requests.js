@@ -29,7 +29,7 @@ export default class RequestCheck {
     else testErrMessage = errors[error](title);
     const testRequest = regexTest[test](request);
     const errIsRequired = errors.isRequired(title);
-    const errIsString = errors.isStringTYpe(title);
+    const errIsString = errors.isStringType(title);
     return this.checkRequest(request, testRequest, errIsRequired, errIsString, testErrMessage);
   }
 
