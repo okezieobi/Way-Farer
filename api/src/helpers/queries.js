@@ -39,7 +39,19 @@ export default class Queries {
     return 'SELECT * FROM buses WHERE number_plate = $1';
   }
 
+  static findBusById() {
+    return 'SELECT * FROM buses WHERE id = $1';
+  }
+
   static findTripsByBusId() {
     return 'SELECT * FROM trips WHERE bus_id = $1 ORDER BY trip_date DESC LIMIT 1';
+  }
+
+  static findTripId() {
+    return 'SELECT * FROM trips WHERE id = $1';
+  }
+
+  static findSeatNumber() {
+    return 'SELECT * FROM bookings where trip_id = $1';
   }
 }

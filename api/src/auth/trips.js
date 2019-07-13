@@ -20,8 +20,10 @@ export default class {
     let lastTripDateOfBus;
     if (findTripsByBusId[0]) lastTripDateOfBus = findTripsByBusId[0].trip_date;
     else lastTripDateOfBus = 0;
-    const tripDateDiff = new Date(tripDate) - lastTripDateOfBus;
-    if (tripDateDiff <= 43200000) protocol.err400Res(res, errors.tripDateErr());
+    const lastTripDateDiff = new Date(tripDate) - lastTripDateOfBus;
+    const tripDateDiff = new Date(tripDate) - new Date();
+    if (lastTripDateDiff <= 43200000
+      && lastTripDateDiff <= tripDateDiff) protocol.err400Res(res, errors.tripDateErr());
     else next();
   }
 }

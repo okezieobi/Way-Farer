@@ -1,0 +1,26 @@
+paths:
+  /auth/signup/admin/:                # path of the user from your endpoint
+    post:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - User            # Value of the tag
+      summary: signs in the admin
+      produces:
+      - application/json
+      parameters:         # request parameters
+      - in: body          # request body
+        name: sign in admin    # name of request, can be any name
+        description: It enables an admin to sign in
+        required: false   # can also be true depending on user preference
+        schema:           # Schema definition
+          $ref: '#/definitions/signIn/admin' 
+      responses:          # server responses
+        200:
+          description: An object with user details
+definitions:        # Schema defination for request body
+  signIn/admin:
+    type: object
+    properties:
+          username:
+            type: string
+          adminPassword:
+            type: string

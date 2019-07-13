@@ -70,4 +70,8 @@ export default class Errors {
   static tripDateErr() {
     return 'Provided trip date must be at least 24hours after the last trip for a bus';
   }
+
+  static invalidTripDate() {
+    return 'You can only';
+  }
 }
