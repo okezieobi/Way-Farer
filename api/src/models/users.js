@@ -12,7 +12,7 @@ export default class Users {
       email,
       firstName: first_name,
       lastName: last_name,
-      hashedPassword: bcrypt.hash(String(password)),
+      hashedPassword: bcrypt.hash(password),
     };
   }
 
@@ -36,11 +36,11 @@ export default class Users {
   }
 
   static adminDataPostgre(data) {
-    const { userName, adminPassword } = data;
+    const { username, password } = data;
     return {
       id: numbers.uniqueIds(),
-      username: String(userName),
-      hashedPassword: bcrypt.hash(String(adminPassword)),
+      username,
+      hashedPassword: bcrypt.hash(password),
     };
   }
 }

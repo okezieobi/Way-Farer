@@ -37,8 +37,8 @@ export default class Users {
   }
 
   static signinAdmin(req, res) {
-    const { adminPassword } = req.body;
+    const { password } = req.body;
     const adminModel = models.createAdminDataResPostgre;
-    return this.signinAll(req, res, adminPassword, adminModel);
+    return this.signinAll(req, res, password, adminModel);
   }
 }

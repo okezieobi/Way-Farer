@@ -32,7 +32,7 @@ export default class ValidateUserRequest {
   }
 
   static signinAdmin(req, res, next) {
-    return this.signinPlus(req, res, next, 'userName',
-      'validateUsername', 'Username', 'adminPassword');
+    return this.signinPlus(req, res, next, 'username',
+      'validateUsername', 'Username', 'password');
   }
 }

@@ -30,7 +30,7 @@ export default class AuthenticateUsers {
   }
 
   static signinAdmin(req, res, next) {
-    return this.signInAll(req, res, next, 'findAdminByUsername', 'Admin', 'userName');
+    return this.signInAll(req, res, next, 'findAdminByUsername', 'Admin', 'username');
   }
 
   static async authenticateAll(req, res, next, tokenTitle, query, title) {
