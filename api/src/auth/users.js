@@ -15,7 +15,7 @@ export default class AuthenticateUsers {
   }
 
   static signUp(req, res, next) {
-    return this.signUpAll(req, res, next, 'userEmail', 'findClientByEmail', 'User');
+    return this.signUpAll(req, res, next, 'email', 'findClientByEmail', 'User');
   }
 
   static async signInAll(req, res, next, query, title, data) {

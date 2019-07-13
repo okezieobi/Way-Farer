@@ -16,7 +16,7 @@ export default class Users {
     const createUserQuery = queries.createClient();
     const arrayData = [id, firstName, lastName, email, hashedPassword];
     const newUser = await database.queryOne(createUserQuery, arrayData);
-    const signUpRes = models.createUserDataResPostgre(newUser);
+    const signUpRes = await models.createUserDataResPostgre(newUser);
     const newToken = await token.generate(newUser.id);
     return protocol.auth201Res(res, signUpRes, newToken);
   }

@@ -1,15 +1,16 @@
+/* eslint-disable camelcase */
 import protocol from '../helpers/response';
 import checkRequest from '../helpers/requests';
 
 export default class ValidateUserRequest {
   static signUp(req, res, next) {
     const {
-      userFirstName, userLastName, userEmail, userPassword,
+      first_name, last_name, email, password,
     } = req.body;
-    const firstNameErr = checkRequest.validateLetters(userFirstName, 'First name');
-    const lastNameErr = checkRequest.validateLetters(userLastName, 'Last name');
-    const emailErr = checkRequest.checkEmailFormat(userEmail, 'Email');
-    const passwordErr = checkRequest.checkPassword(userPassword, 'Password');
+    const firstNameErr = checkRequest.validateLetters(first_name, 'First name');
+    const lastNameErr = checkRequest.validateLetters(last_name, 'Last name');
+    const emailErr = checkRequest.checkEmailFormat(email, 'Email');
+    const passwordErr = checkRequest.checkPassword(password, 'Password');
     const findError = checkRequest.findError(firstNameErr, lastNameErr, emailErr, passwordErr);
     if (findError) protocol.err400Res(res, findError);
     else next();

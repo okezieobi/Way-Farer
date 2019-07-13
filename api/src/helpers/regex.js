@@ -1,49 +1,41 @@
 export default class Patterns {
   static validateEmail(email) {
-    const emailString = String(email);
     const emailPattern = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    return emailPattern.test(emailString);
+    return emailPattern.test(email);
   }
 
   static validatePassword(password) {
-    const passwordString = String(password);
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return passwordPattern.test(passwordString);
+    return passwordPattern.test(password);
   }
 
   static checkName(name) {
-    const nameString = String(name);
     const namePattern = /^[A-Za-z\s]+$/;
-    return namePattern.test(nameString);
+    return namePattern.test(name);
   }
 
   static checkNumber(amount) {
-    const amountString = String(amount);
     const amountPattern = /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
-    return amountPattern.test(amountString);
+    return amountPattern.test(amount);
   }
 
   static checkInteger(integer) {
-    const integerString = String(integer);
     const integerPattern = /^(0|[1-9]\d*)$/;
-    return integerPattern.test(integerString);
+    return integerPattern.test(integer);
   }
 
   static checkUserName(username) {
-    const usernameString = String(username);
     const usernamePattern = /^[a-zA-Z0-9\s_-]+$/;
-    return usernamePattern.test(usernameString);
+    return usernamePattern.test(username);
   }
 
   static validateNumberPlate(numberPlate) {
-    const numberPlateString = String(numberPlate);
     const numberPlatePattern = /^([A-Z0-9]){8,8}$/;
-    return numberPlatePattern.test(numberPlateString);
+    return numberPlatePattern.test(numberPlate);
   }
 
   static checkDateInput(date) {
-    const dateString = String(date);
     const datePattern = /([12]\d{3}\/(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01]))/;
-    return datePattern.test(dateString);
+    return datePattern.test(date);
   }
 }

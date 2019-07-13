@@ -3,6 +3,10 @@ export default class Errors {
     return `${title} is required`;
   }
 
+  static isStringTYpe(title) {
+    return `${title} must be string type`;
+  }
+
   static notLetters(title) {
     return `${title} must be letters`;
   }

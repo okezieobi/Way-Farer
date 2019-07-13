@@ -2,9 +2,10 @@ import regexTest from './regex';
 import errors from './errors';
 
 export default class RequestCheck {
-  static checkRequest(request, testRequest, errMessage, testErrMessage) {
+  static checkRequest(request, testRequest, errRequired, errIsString, testErrMessage) {
     let err;
-    if (!request) err = errMessage;
+    if (!request) err = errRequired;
+    else if (typeof request !== 'string') err = errIsString;
     else if (!testRequest) err = testErrMessage;
     return err;
   }
@@ -27,8 +28,9 @@ export default class RequestCheck {
     if (isErrExceptions) testErrMessage = errors[error]();
     else testErrMessage = errors[error](title);
     const testRequest = regexTest[test](request);
-    const errMessage = errors.isRequired(title);
-    return this.checkRequest(request, testRequest, errMessage, testErrMessage);
+    const errIsRequired = errors.isRequired(title);
+    const errIsString = errors.isStringTYpe(title);
+    return this.checkRequest(request, testRequest, errIsRequired, errIsString, testErrMessage);
   }
 
   static validateLetters(request, title) {
