@@ -34,9 +34,8 @@ describe('Test endpoints at "/api/v1/auth/signup" to create a User with POST', (
     expect(response.body.data).to.have.property('lastName').to.be.a('string').to.equal(testData.last_name);
     expect(response.body.data).to.have.property('email').to.be.a('string').to.equal(testData.email);
     expect(response.body.data).to.have.property('type').to.be.a('string').to.equal('Client');
-    expect(response.body).to.have.property('headers').to.be.an('object');
-    expect(response.body.headers).to.have.property('access-token').to.be.a('string');
-    expect(response.header).to.have.property('access-token').to.be.a('string');
+    expect(response.body).to.have.property('token').to.be.a('string');
+    expect(response.header).to.have.property('token').to.be.a('string');
   });
 
   it('Should NOT create a User at "/api/v1/auth/signup" if user first name is undefined', async () => {

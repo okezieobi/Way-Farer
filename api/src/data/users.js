@@ -27,8 +27,8 @@ export default class ValidateUserRequest {
   }
 
   static signIn(req, res, next) {
-    return this.signinPlus(req, res, next, 'userEmail',
-      'checkEmailFormat', 'Email', 'userPassword');
+    return this.signinPlus(req, res, next, 'email',
+      'checkEmailFormat', 'Email', 'password');
   }
 
   static signinAdmin(req, res, next) {

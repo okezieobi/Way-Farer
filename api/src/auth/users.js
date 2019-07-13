@@ -26,7 +26,7 @@ export default class AuthenticateUsers {
   }
 
   static signIn(req, res, next) {
-    return this.signInAll(req, res, next, 'findClientByEmail', 'User', 'userEmail');
+    return this.signInAll(req, res, next, 'findClientByEmail', 'User', 'email');
   }
 
   static signinAdmin(req, res, next) {
