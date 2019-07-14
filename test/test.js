@@ -37,9 +37,9 @@ require('./users/signin');
 require('./users/adminSignin');
 require('./buses/createOne');
 require('./buses/getAll');
-*/
 require('./trips/createOne');
-// require('./trips/getAll');
+*/
+require('./trips/getAll');
 
 export {
   expect,

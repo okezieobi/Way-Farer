@@ -51,6 +51,6 @@ export default class AuthenticateUsers {
   }
 
   static client(req, res, next) {
-    return this.authenticateAll(req, res, next, 'client-token', 'findClientById', 'client');
+    return this.authenticateAll(req, res, next, 'token', 'findClientById', 'client');
   }
 }
