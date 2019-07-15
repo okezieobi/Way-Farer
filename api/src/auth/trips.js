@@ -15,15 +15,12 @@ export default class {
 
   static async verifyTripDate(req, res, next) {
     const { trip_date, bus_id } = req.body;
-    const findTripsByBusIdQuery = queries.findTripsByBusId();
-    const findTripsByBusId = await database.queryAny(findTripsByBusIdQuery, [bus_id]);
-    let lastTripDateOfBus;
-    if (findTripsByBusId[0]) lastTripDateOfBus = findTripsByBusId[0].trip_date;
-    else lastTripDateOfBus = 0;
-    const lastTripDateDiff = new Date(trip_date) - lastTripDateOfBus;
+    const findTripsByBusIdAndDateQuery = queries.findTripsByBusIdAndDate();
     const tripDateDiff = new Date(trip_date) - new Date();
-    if (lastTripDateDiff <= 43200000
-      && lastTripDateDiff <= tripDateDiff) protocol.err400Res(res, errors.tripDateErr());
-    else next();
+    if (tripDateDiff < -43200000) return protocol.err400Res(res, errors.tripDateErr());
+    const findTripsByBusId = await database.queryOneORNone(findTripsByBusIdAndDateQuery,
+      [bus_id, trip_date]);
+    if (findTripsByBusId) return protocol.err400Res(res, errors.tripDateScheduleErr());
+    return next();
   }
 }

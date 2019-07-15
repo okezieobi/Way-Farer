@@ -84,7 +84,11 @@ export default class Errors {
     return 'Provided trip date must be written in YYYY-MM-DD format';
   }
 
+  static tripDateScheduleErr() {
+    return 'Provided trip date is incorrect, bus is already booked for a trip on requested date';
+  }
+
   static tripDateErr() {
-    return 'Provided trip date must be at least 24hours after the last trip for a bus';
+    return 'Provided date is invalid';
   }
 }

@@ -43,8 +43,8 @@ export default class Queries {
     return 'SELECT * FROM buses WHERE id = $1';
   }
 
-  static findTripsByBusId() {
-    return 'SELECT * FROM trips WHERE bus_id = $1 ORDER BY trip_date DESC LIMIT 1';
+  static findTripsByBusIdAndDate() {
+    return 'SELECT * FROM trips WHERE bus_id = $1 AND trip_date = $2';
   }
 
   static findTripById() {
