@@ -23,12 +23,12 @@ export default class Errors {
     return `${title} must be a positive integer`;
   }
 
-  static userExists(title) {
-    return `${title} exists, please sign in`;
+  static userNotExists() {
+    return 'User does not exist, please sign up';
   }
 
-  static userNotExists(title) {
-    return `${title} does not exist, please sign up`;
+  static userExists() {
+    return 'User exists, please sign in with email or username';
   }
 
   static notEmail() {
@@ -43,12 +43,16 @@ export default class Errors {
     return 'Token is required, please sign in or sign up';
   }
 
-  static wrongToken(title) {
-    return `Token provided does not match any ${title}`;
+  static wrongToken() {
+    return 'Token provided does not match any user';
   }
 
   static invalidToken() {
     return 'Id from token is not a positive integer';
+  }
+
+  static restrictedAccess(title) {
+    return `Only ${title} can access this resource`;
   }
 
   static wrongPassword() {

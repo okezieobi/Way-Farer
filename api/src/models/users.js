@@ -5,11 +5,12 @@ import bcrypt from '../helpers/bcrypt';
 export default class Users {
   static userDataPostgre(data) {
     const {
-      first_name, last_name, email, password,
+      first_name, last_name, email, password, username,
     } = data;
     return {
       id: numbers.uniqueIds(),
       email,
+      username,
       firstName: first_name,
       lastName: last_name,
       hashedPassword: bcrypt.hash(password),
@@ -17,30 +18,16 @@ export default class Users {
   }
 
   static createUserDataResPostgre(data) {
+    const {
+      id, first_name, last_name, username, email, type,
+    } = data;
     return {
-      id: parseInt(data.id, 10),
-      firstName: String(data.first_name),
-      lastName: String(data.last_name),
-      email: String(data.email),
-      type: String(data.type),
-    };
-  }
-
-
-  static createAdminDataResPostgre(data) {
-    return {
-      id: parseInt(data.id, 10),
-      username: String(data.username),
-      type: String(data.type),
-    };
-  }
-
-  static adminDataPostgre(data) {
-    const { username, password } = data;
-    return {
-      id: numbers.uniqueIds(),
-      username,
-      hashedPassword: bcrypt.hash(password),
+      id: parseInt(id, 10),
+      firstName: String(first_name),
+      lastName: String(last_name),
+      userName: String(username),
+      email: String(email),
+      type: String(type),
     };
   }
 }

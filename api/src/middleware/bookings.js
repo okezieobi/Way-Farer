@@ -5,10 +5,10 @@ import validateBooking from '../data/bookings';
 
 export default class Bookings {
   static create() {
-    const valildate = validateBooking.create.bind(validateBooking);
-    const authClient = authenticateUsers.client.bind(authenticateUsers);
+    const validate = validateBooking.create.bind(validateBooking);
+    const authAll = authenticateUsers.authenticateAll.bind(authenticateUsers);
     const authTrip = authenticateBooking.verifyTrip.bind(authenticateBooking);
     const authSeatNo = authenticateBooking.verifySeatNo.bind(authenticateBooking);
-    return middleware.routeCallbacks(valildate, authClient, authTrip, authSeatNo);
+    return middleware.routeCallbacks(validate, authAll, authTrip, authSeatNo);
   }
 }

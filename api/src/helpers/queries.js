@@ -1,22 +1,18 @@
 export default class Queries {
   static findClientByEmail() {
-    return 'SELECT * FROM clients WHERE email = $1';
+    return 'SELECT * FROM users WHERE email = $1';
   }
 
-  static findClientById() {
-    return 'SELECT * FROM clients WHERE id = $1';
+  static findUserById() {
+    return 'SELECT * FROM users WHERE id = $1';
   }
 
   static createClient() {
-    return 'INSERT INTO clients(id, first_name, last_name, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING id, first_name, last_name, email, type';
+    return 'INSERT INTO users(id, first_name, last_name, email, password, username) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, first_name, last_name, email, type, username';
   }
 
   static findAdminByUsername() {
-    return 'SELECT * FROM admins WHERE username = $1';
-  }
-
-  static findAdminById() {
-    return 'SELECT * FROM admins WHERE id = $1';
+    return 'SELECT * FROM users WHERE username = $1';
   }
 
   static createBus() {
@@ -64,5 +60,14 @@ export default class Queries {
       return createBooking;
     });
     return newBooking;
+  }
+
+  static async users(db, findUserByEmailValue, findUserByUsernameValue) {
+    const findUser = await db.task('findUser', async (t) => {
+      const byEmail = await t.oneOrNone(this.findClientByEmail, [findUserByEmailValue]);
+      const byUsername = await t.oneOrNone(this.findAdminByUsername, [findUserByUsernameValue]);
+      return byEmail || byUsername;
+    });
+    return findUser;
   }
 }
