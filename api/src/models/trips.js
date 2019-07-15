@@ -32,7 +32,7 @@ export default class Trips {
   }
 
   static tripDataRes(data) {
-    const { id } = data;
+    const { id, seats } = data;
     const busData = Trips.commonTripData(data);
     const {
       busId, origin, destination, fare,
@@ -44,6 +44,7 @@ export default class Trips {
       origin,
       destination,
       fare,
+      seats: String(seats.join(', ')),
     };
   }
 

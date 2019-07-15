@@ -38,8 +38,9 @@ require('./users/adminSignin');
 require('./buses/createOne');
 require('./buses/getAll');
 require('./trips/createOne');
-*/
 require('./trips/getAll');
+*/
+require('./bookings/createOne');
 
 export {
   expect,

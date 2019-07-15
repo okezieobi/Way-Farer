@@ -32,7 +32,7 @@ export default class Queries {
   }
 
   static createTrip() {
-    return 'INSERT INTO trips(id, bus_id, origin, destination, fare, trip_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+    return 'INSERT INTO trips(id, bus_id, origin, destination, fare, trip_date, seats) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
   }
 
   static findBusByNumberPlate() {
@@ -47,11 +47,22 @@ export default class Queries {
     return 'SELECT * FROM trips WHERE bus_id = $1 ORDER BY trip_date DESC LIMIT 1';
   }
 
-  static findTripId() {
+  static findTripById() {
     return 'SELECT * FROM trips WHERE id = $1';
   }
 
-  static findSeatNumber() {
+  static findBookingByTripId() {
     return 'SELECT * FROM bookings where trip_id = $1';
+  }
+
+  static async booking(db, createBookingArrayValue, tripSeatsArrayValue) {
+    const createBookingQuery = 'INSERT INTO bookings(id, trip_id, user_id, seat_no) VALUES ($1, $2, $3 , $4) RETURNING *';
+    const updateTripQuery = 'UPDATE trips SET seats = $1 WHERE id = $2';
+    const newBooking = await db.task('createBooking', async (t) => {
+      const createBooking = await t.one(createBookingQuery, createBookingArrayValue);
+      await t.none(updateTripQuery, tripSeatsArrayValue);
+      return createBooking;
+    });
+    return newBooking;
   }
 }

@@ -63,6 +63,19 @@ export default class Errors {
     return `${title} not found`;
   }
 
+  static noSeats() {
+    return 'No other seat is available';
+  }
+
+  static availableSeats(title) {
+    const seats = title.join(', ');
+    return `Requested seat is unavailable, please select from seats ${seats}`;
+  }
+
+  static noZeroSeatNo() {
+    return 'Seat number can not be 0';
+  }
+
   static dataFound(title) {
     return `${title} already exists`;
   }
@@ -73,9 +86,5 @@ export default class Errors {
 
   static tripDateErr() {
     return 'Provided trip date must be at least 24hours after the last trip for a bus';
-  }
-
-  static invalidTripDate() {
-    return 'You can only';
   }
 }
