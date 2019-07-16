@@ -4,7 +4,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import swaggerUI from 'swagger-ui-express';
-import swaggerSpec from '../../doc/swagger';
+import swaggerSpec from './configs/swagger';
 import allRoutes from './routes';
 
 const app = express();

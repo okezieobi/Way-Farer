@@ -25,4 +25,4 @@ script:
 after_script:
 - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 - psql -c '\c wayfarer \i api/src/seeders/delete.sql \q' -U postgres
-- psql -c '\c wayfarer \i api/src/seeders/users.sql \q' -U postgres
+- psql -c '\i api/src/seeders/users.sql \q' -U postgres
