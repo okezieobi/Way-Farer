@@ -10,7 +10,8 @@ CREATE TABLE trips
     bus_id      bigint       NOT NULL REFERENCES buses (id) ON DELETE CASCADE,
     origin      varchar(128) NOT NULL,
     destination varchar(128) NOT NULL,
-    trip_date   date  DEFAULT CURRENT_DATE,
+    trip_date   date         DEFAULT CURRENT_DATE,
     fare        numeric      NOT NULL,
-    status      varchar(128) DEFAULT 'Active'
+    "status"    varchar(128) DEFAULT 'Active',
+    seats       integer[]    NOT NULL
 );

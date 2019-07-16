@@ -49,18 +49,20 @@
     "nyc": ""
   },
   "dependencies": {
-    "@babel/polyfill": "",
     "bcryptjs": "",
     "bluebird": "^3.5.4",
     "body-parser": "",
     "chai": "",
     "chai-http": "",
     "core-js": "",
+    "cors": "^2.8.5",
     "dotenv": "",
     "express": "",
     "jsonwebtoken": "^8.5.1",
     "pg-promise": "^8.6.5",
     "regenerator-runtime": "^0.13.2",
+    "swagger-jsdoc": "^3.3.0",
+    "swagger-ui-express": "^4.0.7",
     "unique-random": "^2.1.0"
   },
   "heroku-run-build-script": true

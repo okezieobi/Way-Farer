@@ -1,3 +1,4 @@
+// Don't forget to adjust the testData.trip_date
 import Test, {
   expect,
   chai,
@@ -27,147 +28,167 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should create a trip at "api/v1/trips" as an authenticated Admin if all input data are valid', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2020/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(201);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(201);
     expect(response.body).to.have.property('data').to.be.an('object');
     expect(response.body.data).to.have.property('id').to.be.a('number');
-    expect(response.body.data).to.have.property('busId').to.be.a('number');
+    expect(response.body.data).to.have.property('busId').to.be.a('number').to.equal(parseInt(testData.bus_id, 10));
     expect(response.body.data).to.have.property('origin').to.be.a('string').to.equal(testData.origin);
     expect(response.body.data).to.have.property('destination').to.be.a('string').to.equal(testData.destination);
-    expect(response.body.data).to.have.property('fare').to.be.a('number').to.equal(testData.fare);
-    expect(response.body.data).to.have.property('tripDate').to.be.a('string');
+    expect(response.body.data).to.have.property('fare').to.be.a('number').to.equal(parseInt(testData.fare, 10));
+    expect(response.body.data).to.have.property('tripDate').to.be.an('string');
+    expect(response.body.data).to.have.property('seats').to.be.a('string');
+    expect(response.body.data).to.have.property('status').to.be.a('string').to.equal('Active');
   });
 
-  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if number plate is an empty string', async () => {
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if Bus id is an empty string', async () => {
     const testData = {
-      numberPlate: '',
+      bus_id: '',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Number plate is required');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Bus id is required');
   });
 
-  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if number plate is undefined', async () => {
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if Bus id is not a string', async () => {
     const testData = {
-      numberPlate: undefined,
+      bus_id: 1000,
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Number plate is required');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Bus id must be string type');
   });
 
-  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if number plate is null', async () => {
+
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if Bus id is undefined', async () => {
     const testData = {
-      numberPlate: null,
+      bus_id: undefined,
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Number plate is required');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Bus id is required');
   });
 
-  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if number plate is not sent', async () => {
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if Bus id is null', async () => {
     const testData = {
+      bus_id: null,
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Number plate is required');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Bus id is required');
   });
 
-  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if number plate is does not contain capital letters', async () => {
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if Bus id is not sent', async () => {
     const testData = {
-      numberPlate: 'ggg000ff',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Number plate must be capital letters and positive integers of exactly 8 characters');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Bus id is required');
   });
 
-  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if number plate is does not contain positive integers', async () => {
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if Bus id is a negative integer', async () => {
     const testData = {
-      numberPlate: 'GGG0.00FFF',
+      bus_id: '-2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Number plate must be capital letters and positive integers of exactly 8 characters');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Bus id must be a positive integer');
   });
 
-  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if number plate is does not exactly 8 characters', async () => {
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if Bus id is a negative floating point number', async () => {
     const testData = {
-      numberPlate: 'GGG0000FFF',
+      bus_id: '-202020.2020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Number plate must be capital letters and positive integers of exactly 8 characters');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Bus id must be a positive integer');
   });
 
-  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if number plate is not found', async () => {
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if Bus id is a floating point number', async () => {
     const testData = {
-      numberPlate: 'ERT99948',
+      bus_id: '202020.2020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Bus id must be a positive integer');
+  });
+
+
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if Bus id is not found', async () => {
+    const testData = {
+      bus_id: '2020202021010',
+      origin: 'Port Harcourt',
+      destination: 'Aba',
+      fare: '8',
+      trip_date: '2021/07/17',
+    };
+    const token = await Test.generateToken('5050505050505');
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(404);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(404);
@@ -176,30 +197,46 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip origin is an empty string', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: '',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Trip origin is required');
   });
 
-  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip origin is undefined', async () => {
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip origin is not a string', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
-      origin: undefined,
+      bus_id: '2020202020202',
+      origin: 1000,
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Trip origin must be string type');
+  });
+
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip origin is undefined', async () => {
+    const testData = {
+      bus_id: '2020202020202',
+      origin: undefined,
+      destination: 'Aba',
+      fare: '8',
+      trip_date: '2021/07/17',
+    };
+    const token = await Test.generateToken('5050505050505');
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -208,14 +245,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip origin is null', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: null,
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -224,13 +261,13 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip origin is not sent', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -239,14 +276,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip origin does not contain case insensitive letters', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: '100$%$3',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -255,30 +292,46 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip destination is an empty string', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: '',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Trip destination is required');
   });
 
-  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip destination is undefined', async () => {
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip destination is not string type', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
-      destination: undefined,
-      fare: 8,
-      tripDate: '2019/07/09',
+      destination: 1000,
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Trip destination must be string type');
+  });
+
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip destination is undefined', async () => {
+    const testData = {
+      bus_id: '2020202020202',
+      origin: 'Port Harcourt',
+      destination: undefined,
+      fare: '8',
+      trip_date: '2021/07/17',
+    };
+    const token = await Test.generateToken('5050505050505');
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -287,14 +340,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip destination is null', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: null,
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -303,13 +356,13 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip destination is not sent', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -318,14 +371,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip destination does not contain case insensitive letters', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: '345#$%',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -334,30 +387,46 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip fare is an empty string', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '',
-      tripDate: '2019/07/09',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Trip fare is required');
   });
 
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip fare is not string type', async () => {
+    const testData = {
+      bus_id: '2020202020202',
+      origin: 'Port Harcourt',
+      destination: 'Aba',
+      fare: 1000,
+      trip_date: '2021/07/17',
+    };
+    const token = await Test.generateToken('5050505050505');
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Trip fare must be string type');
+  });
+
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip fare is undefined', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: undefined,
-      tripDate: '2019/07/09',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -366,14 +435,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip fare is null', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: null,
-      tripDate: '2019/07/09',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -382,13 +451,13 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip fare is not sent', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      tripDate: '2019/07/09',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -397,14 +466,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip fare is a negative integer', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: -8,
-      tripDate: '2019/07/09',
+      fare: '-8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -413,14 +482,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip fare is a negative floating point number', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: -8.1,
-      tripDate: '2019/07/09',
+      fare: '-8.1',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -429,14 +498,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip date is an empty string', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '',
+      fare: '8',
+      trip_date: '',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -445,14 +514,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip date is undefined', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: undefined,
+      fare: '8',
+      trip_date: undefined,
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -461,14 +530,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip date is null', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: null,
+      fare: '8',
+      trip_date: null,
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -477,13 +546,13 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip date is not sent', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
+      fare: '8',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -492,30 +561,62 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip date is not in required format', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '201--Hdy$%5',
+      fare: '8',
+      trip_date: '201--Hdy$%5',
     };
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Provided trip date must be written in YYYY-MM-DD format');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Provided trip date must be written in YYYY/MM/DD format');
+  });
+
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip date is not valid', async () => {
+    const testData = {
+      bus_id: '2020202020202',
+      origin: 'Port Harcourt',
+      destination: 'Aba',
+      fare: '8',
+      trip_date: '2019/07/12',
+    };
+    const token = await Test.generateToken('5050505050505');
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Provided date is invalid');
+  });
+
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if bus is already booked for provided date', async () => {
+    const testData = {
+      bus_id: '2020202020202',
+      origin: 'Port Harcourt',
+      destination: 'Aba',
+      fare: '8',
+      trip_date: '2020/07/17',
+    };
+    const token = await Test.generateToken('5050505050505');
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Provided trip date is incorrect, bus is already booked for a trip on requested date');
   });
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if token is an empty string', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = '';
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -524,11 +625,11 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if token is not sent', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const response = await chai.request(app).post('/api/v1/trips').send(testData);
     expect(response).to.have.status(400);
@@ -539,30 +640,30 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if token is does not match admin', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050876');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(404);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(404);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token provided does not match any admin');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token provided does not match any user');
   });
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if id from token is a negative integer', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('-5050505050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -571,14 +672,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if id from token is a negative floating point number', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('-505050.5050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
@@ -587,14 +688,14 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if id from token is a floating point number', async () => {
     const testData = {
-      numberPlate: 'STR101AG',
+      bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      fare: 8,
-      tripDate: '2019/07/09',
+      fare: '8',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('505050.5050505');
-    const response = await chai.request(app).post('/api/v1/trips').set('admin-token', token).send(testData);
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);

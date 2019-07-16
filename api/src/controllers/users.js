@@ -1,5 +1,5 @@
 import database from '../db/pgConnect';
-import password from '../helpers/bcrypt';
+import bcrypt from '../helpers/bcrypt';
 import token from '../helpers/jwt';
 import authenticateUsers from '../auth/users';
 import protocol from '../helpers/response';
@@ -11,34 +11,23 @@ export default class Users {
   static async signUp(req, res) {
     const reqData = await models.userDataPostgre(req.body);
     const {
-      id, firstName, lastName, email, hashedPassword,
+      id, firstName, lastName, email, hashedPassword, username,
     } = reqData;
     const createUserQuery = queries.createClient();
-    const arrayData = [id, firstName, lastName, email, hashedPassword];
+    const arrayData = [id, firstName, lastName, email, hashedPassword, username];
     const newUser = await database.queryOne(createUserQuery, arrayData);
-    const signUpRes = models.createUserDataResPostgre(newUser);
+    const signUpRes = await models.createUserDataResPostgre(newUser);
     const newToken = await token.generate(newUser.id);
     return protocol.auth201Res(res, signUpRes, newToken);
   }
 
-  static async signinAll(req, res, userPassword, model) {
+  static async signIn(req, res) {
+    const { password } = req.body;
     const { verifyUser } = authenticateUsers;
-    const verifyPassword = await password.compare(verifyUser.password, userPassword);
+    const verifyPassword = await bcrypt.compare(verifyUser.password, password);
     if (!verifyPassword) return protocol.err400Res(res, errors.wrongPassword());
-    const signInRes = await model(verifyUser);
+    const signInRes = await models.createUserDataResPostgre(verifyUser);
     const newToken = await token.generate(verifyUser.id);
     return protocol.auth200Res(res, signInRes, newToken);
-  }
-
-  static signinClients(req, res) {
-    const { userPassword } = req.body;
-    const userModel = models.createUserDataResPostgre;
-    return this.signinAll(req, res, userPassword, userModel);
-  }
-
-  static signinAdmin(req, res) {
-    const { adminPassword } = req.body;
-    const adminModel = models.createAdminDataResPostgre;
-    return this.signinAll(req, res, adminPassword, adminModel);
   }
 }

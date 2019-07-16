@@ -1,27 +1,29 @@
+/* eslint-disable camelcase */
 import numbers from '../helpers/uniqueNos';
 import commonModel from './model';
 
 export default class Trips {
   static commonTripData(commonData) {
     const {
-      origin, destination, fare, tripDate,
+      bus_id, origin, destination, fare, trip_date,
     } = commonData;
     return {
-      origin: String(origin),
-      destination: String(destination),
+      origin,
+      destination,
       fare: parseInt(fare, 10),
-      tripDate: new Date(tripDate),
+      tripDate: new Date(trip_date),
+      busId: parseInt(bus_id, 10),
     };
   }
 
-  static tripData(data, busId) {
+  static tripData(data) {
     const busData = this.commonTripData(data);
     const {
-      origin, destination, fare, tripDate,
+      busId, origin, destination, fare, tripDate,
     } = busData;
     return {
       tripId: numbers.uniqueIds(),
-      busId: parseInt(busId, 10),
+      busId,
       tripDate,
       origin,
       destination,
@@ -30,18 +32,20 @@ export default class Trips {
   }
 
   static tripDataRes(data) {
-    const { id } = data;
+    const { id, seats, status } = data;
     const busData = Trips.commonTripData(data);
     const {
-      origin, destination, fare,
+      busId, origin, destination, fare,
     } = busData;
     return {
       id: parseInt(id, 10),
-      busId: parseInt(data.bus_id, 10),
+      busId,
       tripDate: new Date(data.trip_date),
       origin,
       destination,
       fare,
+      status: String(status),
+      seats: String(seats.join(', ')),
     };
   }
 

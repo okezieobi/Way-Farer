@@ -3,6 +3,10 @@ export default class Errors {
     return `${title} is required`;
   }
 
+  static isStringType(title) {
+    return `${title} must be string type`;
+  }
+
   static notLetters(title) {
     return `${title} must be letters`;
   }
@@ -19,12 +23,12 @@ export default class Errors {
     return `${title} must be a positive integer`;
   }
 
-  static userExists(title) {
-    return `${title} exists, please sign in`;
+  static userNotExists() {
+    return 'User does not exist, please sign up';
   }
 
-  static userNotExists(title) {
-    return `${title} does not exist, please sign up`;
+  static userExists() {
+    return 'User exists, please sign in with email or username';
   }
 
   static notEmail() {
@@ -39,12 +43,16 @@ export default class Errors {
     return 'Token is required, please sign in or sign up';
   }
 
-  static wrongToken(title) {
-    return `Token provided does not match any ${title}`;
+  static wrongToken() {
+    return 'Token provided does not match any user';
   }
 
   static invalidToken() {
     return 'Id from token is not a positive integer';
+  }
+
+  static restrictedAccess(title) {
+    return `Only ${title} can access this resource`;
   }
 
   static wrongPassword() {
@@ -59,15 +67,32 @@ export default class Errors {
     return `${title} not found`;
   }
 
+  static noSeats() {
+    return 'No other seat is available';
+  }
+
+  static availableSeats(title) {
+    const seats = title.join(', ');
+    return `Requested seat is unavailable, please select from seats ${seats}`;
+  }
+
+  static noZeroSeatNo() {
+    return 'Seat number can not be 0';
+  }
+
   static dataFound(title) {
     return `${title} already exists`;
   }
 
   static notDate() {
-    return 'Provided trip date must be written in YYYY-MM-DD format';
+    return 'Provided trip date must be written in YYYY/MM/DD format';
+  }
+
+  static tripDateScheduleErr() {
+    return 'Provided trip date is incorrect, bus is already booked for a trip on requested date';
   }
 
   static tripDateErr() {
-    return 'Provided trip date must be at least 24hours after the last trip for a bus';
+    return 'Provided date is invalid';
   }
 }

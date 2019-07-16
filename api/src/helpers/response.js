@@ -1,21 +1,20 @@
 export default class Protocol {
-  static response(res, codeStatus, resKey, resValue) {
-    const response = {
+  static responseData(codeStatus, resKey, resValue) {
+    return {
       status: codeStatus,
       [resKey]: resValue,
     };
+  }
+
+  static response(res, codeStatus, resKey, resValue) {
+    const response = this.responseData(codeStatus, resKey, resValue);
     res.status(codeStatus).send(response);
   }
 
   static authResponse(res, codeStatus, resKey, resValue, token) {
-    const response = {
-      status: codeStatus,
-      [resKey]: resValue,
-      headers: {
-        'access-token': token,
-      },
-    };
-    res.status(codeStatus).set(response.headers).send(response);
+    const authResponse = this.responseData(codeStatus, resKey, resValue);
+    authResponse.token = token;
+    res.status(codeStatus).set('token', authResponse.token).send(authResponse);
   }
 
   static err400Res(res, err400Message) {

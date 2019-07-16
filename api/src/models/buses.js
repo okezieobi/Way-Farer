@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import numbers from '../helpers/uniqueNos';
 import commonModel from './model';
 
@@ -5,7 +6,7 @@ export default class Buses {
   static commonBusData(commonData) {
     const { model, year, capacity } = commonData;
     return {
-      model: String(model),
+      model,
       year: parseInt(year, 10),
       capacity: parseInt(capacity, 10),
     };
@@ -13,14 +14,14 @@ export default class Buses {
 
   static busData(data) {
     const {
-      numberPlate, manufacturer,
+      number_plate, manufacturer,
     } = data;
     const commonData = this.commonBusData(data);
     const { model, year, capacity } = commonData;
     return {
       id: numbers.uniqueIds(),
-      numberPlate: String(numberPlate),
-      manufacturer: String(manufacturer),
+      numberPlate: number_plate,
+      manufacturer,
       model,
       year,
       capacity,
