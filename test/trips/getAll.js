@@ -45,6 +45,8 @@ describe('Test endpoint at "api/v1/trips" to get all trips as an authenticated C
       expect(response.body.data[resData]).to.have.property('origin').to.be.a('string');
       expect(response.body.data[resData]).to.have.property('destination').to.be.a('string');
       expect(response.body.data[resData]).to.have.property('fare').to.be.a('number');
+      expect(response.body.data[resData]).to.have.property('seats').to.be.a('string');
+      expect(response.body.data[resData]).to.have.property('status').to.be.a('string');
     }
   });
 
@@ -71,7 +73,7 @@ describe('Test endpoint at "api/v1/trips" to get all trips as an authenticated C
     expect(response).to.have.status(404);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(404);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token provided does not match any client');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token provided does not match any user');
   });
 
   it('Should not get all trips at "api/v1/trips" as an authenticated Client with GET if id from token is a negative integer', async () => {
@@ -123,9 +125,9 @@ describe('Test endpoint at "api/v1/trips/admin" to get all trips as an authentic
     await pool.queryNone(Test.deleteData());
   });
 
-  it('Should get all trips at "api/v1/trips/admin" as an authenticated Admin if all input data are valid', async () => {
+  it('Should get all trips at "api/v1/trips" as an authenticated Admin if all input data are valid', async () => {
     const token = await Test.generateToken('5050505050505');
-    const response = await chai.request(app).get('/api/v1/trips/admin').set('token', token);
+    const response = await chai.request(app).get('/api/v1/trips').set('token', token);
     expect(response).to.have.status(200);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(200);
@@ -139,56 +141,58 @@ describe('Test endpoint at "api/v1/trips/admin" to get all trips as an authentic
       expect(response.body.data[resData]).to.have.property('origin').to.be.a('string');
       expect(response.body.data[resData]).to.have.property('destination').to.be.a('string');
       expect(response.body.data[resData]).to.have.property('fare').to.be.a('number');
+      expect(response.body.data[resData]).to.have.property('seats').to.be.a('string');
+      expect(response.body.data[resData]).to.have.property('status').to.be.a('string');
     }
   });
 
-  it('Should not get all trips at "api/v1/trips/admin" as an authenticated Admin with GET if token is an empty string', async () => {
+  it('Should not get all trips at "api/v1/trips" as an authenticated Admin with GET if token is an empty string', async () => {
     const token = '';
-    const response = await chai.request(app).get('/api/v1/trips/admin').set('token', token);
+    const response = await chai.request(app).get('/api/v1/trips').set('token', token);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token is required, please sign in or sign up');
   });
 
-  it('Should not get all trips at "api/v1/trips/admin" as an authenticated Admin with GET if token is not sent', async () => {
-    const response = await chai.request(app).get('/api/v1/trips/admin');
+  it('Should not get all trips at "api/v1/trips" as an authenticated Admin with GET if token is not sent', async () => {
+    const response = await chai.request(app).get('/api/v1/trips');
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token is required, please sign in or sign up');
   });
 
-  it('Should not get all trips at "api/v1/trips/admin" as an authenticated Admin with GET if token does not match any admin', async () => {
+  it('Should not get all trips at "api/v1/trips" as an authenticated Admin with GET if token does not match any admin', async () => {
     const token = await Test.generateToken('5050505053249');
-    const response = await chai.request(app).get('/api/v1/trips/admin').set('token', token);
+    const response = await chai.request(app).get('/api/v1/trips').set('token', token);
     expect(response).to.have.status(404);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(404);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token provided does not match any admin');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token provided does not match any user');
   });
 
-  it('Should not get all trips at "api/v1/trips/admin" as an authenticated Admin with GET if id from token is a negative integer', async () => {
+  it('Should not get all trips at "api/v1/trips" as an authenticated Admin with GET if id from token is a negative integer', async () => {
     const token = await Test.generateToken('-5050505050505');
-    const response = await chai.request(app).get('/api/v1/trips/admin').set('token', token);
+    const response = await chai.request(app).get('/api/v1/trips').set('token', token);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Id from token is not a positive integer');
   });
 
-  it('Should not get all trips at "api/v1/trips/admin" as an authenticated Admin with GET if id from token is a floating point number', async () => {
+  it('Should not get all trips at "api/v1/trips" as an authenticated Admin with GET if id from token is a floating point number', async () => {
     const token = await Test.generateToken('505050.5050505');
-    const response = await chai.request(app).get('/api/v1/trips/admin').set('token', token);
+    const response = await chai.request(app).get('/api/v1/trips').set('token', token);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Id from token is not a positive integer');
   });
 
-  it('Should not get all trips at "api/v1/trips/admin" as an authenticated Admin with GET if id from token is a floating point number', async () => {
+  it('Should not get all trips at "api/v1/trips" as an authenticated Admin with GET if id from token is a floating point number', async () => {
     const token = await Test.generateToken('-505050.5050505');
-    const response = await chai.request(app).get('/api/v1/trips/admin').set('token', token);
+    const response = await chai.request(app).get('/api/v1/trips').set('token', token);
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
