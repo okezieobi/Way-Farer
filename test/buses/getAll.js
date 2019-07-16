@@ -67,7 +67,7 @@ describe('Test endpoint at "api/v1/buses" that gets all bus data as an authentic
     expect(response).to.have.status(404);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(404);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token provided does not match any admin');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token provided does not match any user');
   });
 
   it('Should not get all bus data at "api/v1/buses" as an authenticated Admin with GET if id from token is a negative integer', async () => {
