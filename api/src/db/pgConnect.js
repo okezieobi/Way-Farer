@@ -15,6 +15,7 @@ const string = process.env.DATABASE_URL;
 
 const pool = pgp({
   connectionString: string,
+  ssl: true,
 });
 
 
