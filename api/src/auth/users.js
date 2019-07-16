@@ -15,7 +15,7 @@ export default class AuthenticateUsers {
 
   static async signUp(req, res, next) {
     const user = await this.authEmailUsername(req);
-    if (user) return protocol.err404Res(res, errors.userExists());
+    if (user) return protocol.err400Res(res, errors.userExists());
     return next();
   }
 
