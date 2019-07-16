@@ -56,7 +56,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -72,7 +72,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -89,7 +89,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -105,7 +105,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -120,7 +120,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -136,7 +136,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -152,7 +152,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -168,7 +168,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -185,7 +185,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -201,7 +201,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: '',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -217,7 +217,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 1000,
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -233,7 +233,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: undefined,
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -249,7 +249,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: null,
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -264,7 +264,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       bus_id: '2020202020202',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -280,7 +280,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: '100$%$3',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -296,7 +296,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: '',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -312,7 +312,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 1000,
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -328,7 +328,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: undefined,
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -344,7 +344,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: null,
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -359,7 +359,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       bus_id: '2020202020202',
       origin: 'Port Harcourt',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -375,7 +375,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: '345#$%',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -391,7 +391,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -407,7 +407,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: 1000,
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -423,7 +423,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: undefined,
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -439,7 +439,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: null,
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -454,7 +454,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       bus_id: '2020202020202',
       origin: 'Port Harcourt',
       destination: 'Aba',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -470,7 +470,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '-8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -486,7 +486,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '-8.1',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -572,7 +572,39 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Provided trip date must be written in YYYY-MM-DD format');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Provided trip date must be written in YYYY/MM/DD format');
+  });
+
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if trip date is not valid', async () => {
+    const testData = {
+      bus_id: '2020202020202',
+      origin: 'Port Harcourt',
+      destination: 'Aba',
+      fare: '8',
+      trip_date: '2019/07/12',
+    };
+    const token = await Test.generateToken('5050505050505');
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Provided date is invalid');
+  });
+
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if bus is already booked for provided date', async () => {
+    const testData = {
+      bus_id: '2020202020202',
+      origin: 'Port Harcourt',
+      destination: 'Aba',
+      fare: '8',
+      trip_date: '2020/07/17',
+    };
+    const token = await Test.generateToken('5050505050505');
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Provided trip date is incorrect, bus is already booked for a trip on requested date');
   });
 
   it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if token is an empty string', async () => {
@@ -581,7 +613,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = '';
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -597,7 +629,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const response = await chai.request(app).post('/api/v1/trips').send(testData);
     expect(response).to.have.status(400);
@@ -612,7 +644,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('5050505050876');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -628,7 +660,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('-5050505050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -644,7 +676,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('-505050.5050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
@@ -660,7 +692,7 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
       origin: 'Port Harcourt',
       destination: 'Aba',
       fare: '8',
-      trip_date: '2019/07/17',
+      trip_date: '2021/07/17',
     };
     const token = await Test.generateToken('505050.5050505');
     const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);

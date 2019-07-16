@@ -39,10 +39,10 @@ require('./users/signup');
 require('./users/signin');
 require('./buses/createOne');
 require('./buses/getAll');
-require('./trips/createOne');
 */
-require('./trips/getAll');
+require('./trips/createOne');
 /*
+require('./trips/getAll');
 require('./bookings/createOne');
 */
 

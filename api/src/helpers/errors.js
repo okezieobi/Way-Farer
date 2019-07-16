@@ -85,7 +85,7 @@ export default class Errors {
   }
 
   static notDate() {
-    return 'Provided trip date must be written in YYYY-MM-DD format';
+    return 'Provided trip date must be written in YYYY/MM/DD format';
   }
 
   static tripDateScheduleErr() {
