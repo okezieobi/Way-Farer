@@ -17,8 +17,7 @@
     "start": "node api/dist/index.js",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "codeClimate": "nyc --reporter=lcov npm test",
-    "test": "mocha --require @babel/register test/test.js --exit",
-    "database for heroku": "cat api/src/migrations/heroku.sql | heroku pg:psql -a andela-way-farer HEROKU_POSTGRESQL_BROWN_URL"
+    "test": "mocha --require @babel/register test/test.js --exit"
   },
   "repository": {
     "type": "git",
