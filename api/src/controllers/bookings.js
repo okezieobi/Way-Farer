@@ -11,11 +11,12 @@ export default class Bookings {
     const { findUser } = authenticatedUser;
     const { findTrip } = authenticatedTrip;
     const { seats } = findTrip;
-    const reqData = models.bookingsData(req.body, findUser.id);
+    const reqData = models.bookingsData(req.body, findUser.id, findTrip);
     const {
-      id, tripId, userId, seatNo,
+      id, tripId, userId, seatNo, origin, destination, busId, fare, tripDate,
     } = reqData;
-    const bookingArrayData = [id, tripId, userId, seatNo];
+    const bookingArrayData = [id, tripId, userId, seatNo, origin,
+      destination, busId, tripDate, fare];
     const updatedTripSeatData = seats.filter(seat => seatNo !== seat);
     const newBooking = await BookingQueries.booking(database.pool, bookingArrayData,
       [updatedTripSeatData, findTrip.id]);

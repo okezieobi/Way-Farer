@@ -42,6 +42,7 @@ require('./buses/getAll');
 require('./trips/createOne');
 require('./trips/getAll');
 require('./bookings/createOne');
+require('./bookings/getAll');
 
 export {
   expect,

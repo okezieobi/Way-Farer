@@ -49,6 +49,11 @@ describe('Test endpoint at "api/v1/bookings" that creates a booking as an authen
     expect(response.body.data).to.have.property('firstName').to.be.a('string');
     expect(response.body.data).to.have.property('lastName').to.be.a('string');
     expect(response.body.data).to.have.property('email').to.be.a('string');
+    expect(response.body.data).to.have.property('origin').to.be.a('string');
+    expect(response.body.data).to.have.property('destination').to.be.a('string');
+    expect(response.body.data).to.have.property('busId').to.be.a('number');
+    expect(response.body.data).to.have.property('fare').to.be.a('number');
+    expect(response.body.data).to.have.property('tripDate').to.be.a('string');
   });
 
   it('Should not create a booking at "api/v1/bookings" as an authenticated Client if seat no is not string type', async () => {

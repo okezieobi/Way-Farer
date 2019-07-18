@@ -75,7 +75,7 @@ class BookingQueries {
   }
 
   static async booking(db, createBookingArrayValue, tripSeatsArrayValue) {
-    const createBookingQuery = 'INSERT INTO bookings(id, trip_id, user_id, seat_no) VALUES ($1, $2, $3 , $4) RETURNING *';
+    const createBookingQuery = 'INSERT INTO bookings(id, trip_id, user_id, seat_no, origin, destination, bus_id, trip_date, fare) VALUES ($1, $2, $3 , $4, $5, $6, $7, $8, $9) RETURNING *';
     const updateTripQuery = 'UPDATE trips SET seats = $1 WHERE id = $2';
     const newBooking = await db.task('createBooking', async (t) => {
       const createBooking = await t.one(createBookingQuery, createBookingArrayValue);

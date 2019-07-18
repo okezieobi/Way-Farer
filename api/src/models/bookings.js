@@ -10,7 +10,10 @@ export default class Bookings {
     };
   }
 
-  static bookingsData(data, userId) {
+  static bookingsData(data, userId, trip) {
+    const {
+      fare, origin, destination, bus_id, trip_date,
+    } = trip;
     const reqData = this.commonData(data);
     const { tripId, seatNo } = reqData;
     return {
@@ -18,14 +21,21 @@ export default class Bookings {
       tripId,
       userId: parseInt(userId, 10),
       seatNo,
+      origin: String(origin),
+      destination: String(destination),
+      busId: parseInt(bus_id, 10),
+      fare: parseInt(fare, 10),
+      tripDate: new Date(trip_date),
     };
   }
 
   static bookingDataRes(data, user) {
     const { first_name, last_name, email } = user;
-    const { id, user_id, created_on } = data;
-    const reqData = this.commonData(data);
-    const { tripId, seatNo } = reqData;
+    const {
+      id, user_id, created_on, fare, origin, destination, bus_id, trip_date,
+    } = data;
+    const resData = this.commonData(data);
+    const { tripId, seatNo } = resData;
     return {
       id: parseInt(id, 10),
       tripId,
@@ -35,12 +45,17 @@ export default class Bookings {
       firstName: String(first_name),
       lastName: String(last_name),
       email: String(email),
+      origin: String(origin),
+      destination: String(destination),
+      busId: parseInt(bus_id, 10),
+      fare: parseFloat(fare),
+      tripDate: new Date(trip_date),
     };
   }
 
-  static bookingDataArray(bookings, userData) {
+  static bookingDataArray(bookings, userData, tripData) {
     if (bookings) {
-      return bookings.map(bookingData => this.bookingDataRes(bookingData, userData));
+      return bookings.map(bookingData => this.bookingDataRes(bookingData, userData, tripData));
     }
     return bookings;
   }
