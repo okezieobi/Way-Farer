@@ -1,4 +1,4 @@
-export default class Errors {
+class TitledErrors {
   static isRequired(title) {
     return `${title} is required`;
   }
@@ -23,6 +23,26 @@ export default class Errors {
     return `${title} must be a positive integer`;
   }
 
+  static restrictedAccess(title) {
+    return `Only ${title} can access this resource`;
+  }
+
+  static dataNotFound(title) {
+    return `${title} not found`;
+  }
+
+  static availableSeats(title) {
+    const seats = title.join(', ');
+    return `Requested seat is unavailable, please select from seats ${seats}`;
+  }
+
+  static dataFound(title) {
+    return `${title} already exists`;
+  }
+}
+
+
+class UntitledErrors {
   static userNotExists() {
     return 'User does not exist, please sign up';
   }
@@ -43,47 +63,6 @@ export default class Errors {
     return 'Token is required, please sign in or sign up';
   }
 
-  static wrongToken() {
-    return 'Token provided does not match any user';
-  }
-
-  static invalidToken() {
-    return 'Id from token is not a positive integer';
-  }
-
-  static restrictedAccess(title) {
-    return `Only ${title} can access this resource`;
-  }
-
-  static wrongPassword() {
-    return 'Password does not match user';
-  }
-
-  static notNumberPlate() {
-    return 'Number plate must be capital letters and positive integers of exactly 8 characters';
-  }
-
-  static dataNotFound(title) {
-    return `${title} not found`;
-  }
-
-  static noSeats() {
-    return 'No other seat is available';
-  }
-
-  static availableSeats(title) {
-    const seats = title.join(', ');
-    return `Requested seat is unavailable, please select from seats ${seats}`;
-  }
-
-  static noZeroSeatNo() {
-    return 'Seat number can not be 0';
-  }
-
-  static dataFound(title) {
-    return `${title} already exists`;
-  }
-
   static notDate() {
     return 'Provided trip date must be written in YYYY/MM/DD format';
   }
@@ -95,4 +74,33 @@ export default class Errors {
   static tripDateErr() {
     return 'Provided date is invalid';
   }
+
+  static wrongToken() {
+    return 'Token provided does not match any user';
+  }
+
+  static invalidToken() {
+    return 'Id from token is not a positive integer';
+  }
+
+  static noZeroSeatNo() {
+    return 'Seat number can not be 0';
+  }
+
+  static noSeats() {
+    return 'No other seat is available';
+  }
+
+  static wrongPassword() {
+    return 'Password does not match user';
+  }
+
+  static notNumberPlate() {
+    return 'Number plate must be capital letters and positive integers of exactly 8 characters';
+  }
 }
+
+export {
+  TitledErrors,
+  UntitledErrors,
+};

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import protocol from '../helpers/response';
 import database from '../db/pgConnect';
-import errors from '../helpers/errors';
+import { UntitledErrors, TitledErrors } from '../helpers/errors';
 import queries from '../helpers/queries';
 
 export default class Bookings {
@@ -9,7 +9,7 @@ export default class Bookings {
     const { trip_id } = req.body;
     const findTripQuery = queries.findTripById();
     this.findTrip = await database.queryOneORNone(findTripQuery, [trip_id]);
-    if (!this.findTrip) protocol.err404Res(res, errors.dataNotFound('Trip data'));
+    if (!this.findTrip) protocol.err404Res(res, TitledErrors.dataNotFound('Trip data'));
     else next();
   }
 
@@ -17,9 +17,9 @@ export default class Bookings {
     const { findTrip } = this;
     const { seats } = findTrip;
     const { seat_no } = req.body;
-    if (parseInt(seat_no, 10) === 0) return protocol.err400Res(res, errors.noZeroSeatNo());
+    if (parseInt(seat_no, 10) === 0) return protocol.err400Res(res, UntitledErrors.noZeroSeatNo());
     const checkSeat = seats.find(seat => seat === parseInt(seat_no, 10));
-    if (!checkSeat) return protocol.err400Res(res, errors.availableSeats(seats));
+    if (!checkSeat) return protocol.err400Res(res, TitledErrors.availableSeats(seats));
     return next();
   }
 }

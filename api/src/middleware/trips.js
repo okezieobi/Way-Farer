@@ -6,15 +6,14 @@ import authenticateTrip from '../auth/trips';
 export default class Trips {
   static create() {
     const validate = validateTripData.create.bind(validateTripData);
-    const authAll = authenticateUsers.authenticateAll.bind(authenticateUsers);
+    this.authAll = authenticateUsers.authenticateAll.bind(authenticateUsers);
     const authAdmin = authenticateUsers.admin.bind(authenticateUsers);
     const authBus = authenticateTrip.verifyBus.bind(authenticateTrip);
     const authTripDate = authenticateTrip.verifyTripDate.bind(authenticateTrip);
-    return middleware.routeCallbacks(validate, authAll, authAdmin, authBus, authTripDate);
+    return middleware.routeCallbacks(validate, this.authAll, authAdmin, authBus, authTripDate);
   }
 
   static getAll() {
-    const authAll = authenticateUsers.authenticateAll.bind(authenticateUsers);
-    return middleware.routeCallbacks(authAll);
+    return middleware.routeCallbacks(this.authAll);
   }
 }
