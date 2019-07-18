@@ -11,4 +11,8 @@ export default class Bookings {
     const authSeatNo = authenticateBooking.verifySeatNo.bind(authenticateBooking);
     return middleware.routeCallbacks(validate, this.authAll, authTrip, authSeatNo);
   }
+
+  static getAll() {
+    return middleware.routeCallbacks(this.authAll);
+  }
 }

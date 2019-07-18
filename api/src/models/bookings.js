@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import numbers from '../helpers/uniqueNos';
-import commonModel from './model';
 
 export default class Bookings {
   static commonData(data) {
@@ -39,10 +38,10 @@ export default class Bookings {
     };
   }
 
-  static tripDataArray(array) {
-    if (array) {
-      return commonModel.modifyArray(array, this.bookingDataRes);
+  static bookingDataArray(bookings, userData) {
+    if (bookings) {
+      return bookings.map(bookingData => this.bookingDataRes(bookingData, userData));
     }
-    return array;
+    return bookings;
   }
 }

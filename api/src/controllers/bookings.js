@@ -22,4 +22,20 @@ export default class Bookings {
     const newBookingRes = models.bookingDataRes(newBooking, findUser);
     return protocol.success201Res(res, newBookingRes);
   }
+
+  static async getAll(req, res) {
+    const { findUser } = authenticatedUser;
+    const { is_admin, id } = findUser;
+    let getBookingsQuery;
+    let bookings;
+    if (is_admin) {
+      getBookingsQuery = BookingQueries.findAllBookings();
+      bookings = await database.queryAny(getBookingsQuery);
+    } else {
+      getBookingsQuery = BookingQueries.findBookingsByUserId();
+      bookings = await database.queryAny(getBookingsQuery, [id]);
+    }
+    const bookingsRes = models.bookingDataArray(bookings, findUser);
+    return protocol.success200Res(res, bookingsRes);
+  }
 }

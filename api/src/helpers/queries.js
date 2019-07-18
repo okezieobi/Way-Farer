@@ -66,6 +66,14 @@ class BookingQueries {
     return 'SELECT * FROM bookings where trip_id = $1';
   }
 
+  static findBookingsByUserId() {
+    return 'SELECT * FROM bookings where user_id = $1';
+  }
+
+  static findAllBookings() {
+    return 'SELECT * FROM bookings';
+  }
+
   static async booking(db, createBookingArrayValue, tripSeatsArrayValue) {
     const createBookingQuery = 'INSERT INTO bookings(id, trip_id, user_id, seat_no) VALUES ($1, $2, $3 , $4) RETURNING *';
     const updateTripQuery = 'UPDATE trips SET seats = $1 WHERE id = $2';
