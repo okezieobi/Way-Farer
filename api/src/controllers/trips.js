@@ -1,6 +1,6 @@
 import database from '../db/pgConnect';
 import models from '../models/trips';
-import queries from '../helpers/queries';
+import { TripQueries } from '../helpers/queries';
 import protocol from '../helpers/response';
 import authenticatedBus from '../auth/trips';
 
@@ -20,7 +20,7 @@ export default class Trips {
     const {
       tripId, busId, origin, destination, fare, tripDate,
     } = reqData;
-    const createTripQuery = queries.createTrip();
+    const createTripQuery = TripQueries.createTrip();
     const arrayData = [tripId, busId, origin, destination, fare, tripDate, seats];
     const createTrip = await database.queryOne(createTripQuery, arrayData);
     const newTripRes = await models.tripDataRes(createTrip);
@@ -28,7 +28,7 @@ export default class Trips {
   }
 
   static async getAll(req, res) {
-    const getAllTripsQuery = queries.getAllTrips();
+    const getAllTripsQuery = TripQueries.getAllTrips();
     const allTrips = await database.queryAny(getAllTripsQuery);
     const allTripsRes = await models.tripDataArray(allTrips);
     return protocol.success200Res(res, allTripsRes);

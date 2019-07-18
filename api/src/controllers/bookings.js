@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import protocol from '../helpers/response';
 import database from '../db/pgConnect';
-import queries from '../helpers/queries';
+import { BookingQueries } from '../helpers/queries';
 import models from '../models/bookings';
 import authenticatedUser from '../auth/users';
 import authenticatedTrip from '../auth/bookings';
@@ -17,7 +17,7 @@ export default class Bookings {
     } = reqData;
     const bookingArrayData = [id, tripId, userId, seatNo];
     const updatedTripSeatData = seats.filter(seat => seatNo !== seat);
-    const newBooking = await queries.booking(database.pool, bookingArrayData,
+    const newBooking = await BookingQueries.booking(database.pool, bookingArrayData,
       [updatedTripSeatData, findTrip.id]);
     const newBookingRes = models.bookingDataRes(newBooking, findUser);
     return protocol.success201Res(res, newBookingRes);

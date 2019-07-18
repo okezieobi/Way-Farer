@@ -2,12 +2,12 @@
 import protocol from '../helpers/response';
 import database from '../db/pgConnect';
 import { UntitledErrors, TitledErrors } from '../helpers/errors';
-import queries from '../helpers/queries';
+import { TripQueries } from '../helpers/queries';
 
 export default class Bookings {
   static async verifyTrip(req, res, next) {
     const { trip_id } = req.body;
-    const findTripQuery = queries.findTripById();
+    const findTripQuery = TripQueries.findTripById();
     this.findTrip = await database.queryOneORNone(findTripQuery, [trip_id]);
     if (!this.findTrip) protocol.err404Res(res, TitledErrors.dataNotFound('Trip data'));
     else next();

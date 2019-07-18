@@ -1,4 +1,22 @@
-export default class Queries {
+class TripQueries {
+  static getAllTrips() {
+    return 'SELECT * FROM trips';
+  }
+
+  static createTrip() {
+    return 'INSERT INTO trips(id, bus_id, origin, destination, fare, trip_date, seats) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+  }
+
+  static findTripsByBusIdAndDate() {
+    return 'SELECT * FROM trips WHERE bus_id = $1 AND trip_date = $2';
+  }
+
+  static findTripById() {
+    return 'SELECT * FROM trips WHERE id = $1';
+  }
+}
+
+class UserQueries {
   static findClientByEmail() {
     return 'SELECT * FROM users WHERE email = $1';
   }
@@ -15,20 +33,23 @@ export default class Queries {
     return 'SELECT * FROM users WHERE username = $1';
   }
 
+  static async users(db, findUserByEmailValue, findUserByUsernameValue) {
+    const findUser = await db.task('findUser', async (t) => {
+      const byEmail = await t.oneOrNone(this.findClientByEmail, [findUserByEmailValue]);
+      const byUsername = await t.oneOrNone(this.findAdminByUsername, [findUserByUsernameValue]);
+      return byEmail || byUsername;
+    });
+    return findUser;
+  }
+}
+
+class BusQueries {
   static createBus() {
     return 'INSERT INTO buses(id, number_plate, manufacturer, model, year, capacity) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
   }
 
   static getAllBuses() {
     return 'SELECT * FROM buses';
-  }
-
-  static getAllTrips() {
-    return 'SELECT * FROM trips';
-  }
-
-  static createTrip() {
-    return 'INSERT INTO trips(id, bus_id, origin, destination, fare, trip_date, seats) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
   }
 
   static findBusByNumberPlate() {
@@ -38,15 +59,9 @@ export default class Queries {
   static findBusById() {
     return 'SELECT * FROM buses WHERE id = $1';
   }
+}
 
-  static findTripsByBusIdAndDate() {
-    return 'SELECT * FROM trips WHERE bus_id = $1 AND trip_date = $2';
-  }
-
-  static findTripById() {
-    return 'SELECT * FROM trips WHERE id = $1';
-  }
-
+class BookingQueries {
   static findBookingByTripId() {
     return 'SELECT * FROM bookings where trip_id = $1';
   }
@@ -61,13 +76,11 @@ export default class Queries {
     });
     return newBooking;
   }
-
-  static async users(db, findUserByEmailValue, findUserByUsernameValue) {
-    const findUser = await db.task('findUser', async (t) => {
-      const byEmail = await t.oneOrNone(this.findClientByEmail, [findUserByEmailValue]);
-      const byUsername = await t.oneOrNone(this.findAdminByUsername, [findUserByUsernameValue]);
-      return byEmail || byUsername;
-    });
-    return findUser;
-  }
 }
+
+export {
+  TripQueries,
+  UserQueries,
+  BusQueries,
+  BookingQueries,
+};

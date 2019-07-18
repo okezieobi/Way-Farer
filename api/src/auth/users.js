@@ -3,14 +3,14 @@ import protocol from '../helpers/response';
 import database from '../db/pgConnect';
 import { UntitledErrors, TitledErrors } from '../helpers/errors';
 import test from '../helpers/regex';
-import queries from '../helpers/queries';
+import { UserQueries } from '../helpers/queries';
 import jwt from '../helpers/jwt';
 import bcrypt from '../helpers/bcrypt';
 
 export default class AuthenticateUsers {
   static async authEmailUsername(req) {
     const { username, email } = req.body;
-    const user = await queries.users(database.pool, email, username);
+    const user = await UserQueries.users(database.pool, email, username);
     return user;
   }
 
@@ -42,7 +42,7 @@ export default class AuthenticateUsers {
     const { userId } = verifyToken;
     const checkId = await test.checkInteger(userId);
     if (!checkId) return protocol.err400Res(res, UntitledErrors.invalidToken());
-    this.findUser = await database.queryOneORNone(queries.findUserById(), [userId]);
+    this.findUser = await database.queryOneORNone(UserQueries.findUserById(), [userId]);
     if (!this.findUser) return protocol.err404Res(res, UntitledErrors.wrongToken());
     return next();
   }

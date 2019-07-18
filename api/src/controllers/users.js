@@ -3,7 +3,7 @@ import token from '../helpers/jwt';
 import authenticateUsers from '../auth/users';
 import protocol from '../helpers/response';
 import models from '../models/users';
-import queries from '../helpers/queries';
+import { UserQueries } from '../helpers/queries';
 
 export default class Users {
   static async signUp(req, res) {
@@ -11,7 +11,7 @@ export default class Users {
     const {
       id, firstName, lastName, email, hashedPassword, username,
     } = reqData;
-    const createUserQuery = queries.createClient();
+    const createUserQuery = UserQueries.createClient();
     const arrayData = [id, firstName, lastName, email, hashedPassword, username];
     const newUser = await database.queryOne(createUserQuery, arrayData);
     const signUpRes = await models.createUserDataResPostgre(newUser);
