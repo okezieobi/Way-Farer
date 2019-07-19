@@ -1,6 +1,6 @@
 import database from '../db/pgConnect';
 import models from '../models/buses';
-import queries from '../helpers/queries';
+import { BusQueries } from '../helpers/queries';
 import protocol from '../helpers/response';
 
 export default class Buses {
@@ -9,7 +9,7 @@ export default class Buses {
     const {
       id, numberPlate, manufacturer, model, year, capacity,
     } = reqData;
-    const createBusQuery = queries.createBus();
+    const createBusQuery = BusQueries.createBus();
     const arrayData = [id, numberPlate, manufacturer, model, year, capacity];
     const newBusData = await database.queryOne(createBusQuery, arrayData);
     const newBusRes = await models.busDataRes(newBusData);
@@ -17,7 +17,7 @@ export default class Buses {
   }
 
   static async getAll(req, res) {
-    const getAllBusesQuery = queries.getAllBuses();
+    const getAllBusesQuery = BusQueries.getAllBuses();
     const allBuses = await database.queryAny(getAllBusesQuery);
     const allBusesRes = await models.busDataArray(allBuses);
     return protocol.success200Res(res, allBusesRes);

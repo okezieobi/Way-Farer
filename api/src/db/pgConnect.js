@@ -11,7 +11,7 @@ const options = {
 
 const pgp = pgPromise(options);
 
-const string = process.env.HEROKU_POSTGRESQL_BROWN_URL || process.env.DATABASE_URL;
+const string = process.env.HEROKU_POSTGRESQL_AMBER_URL || process.env.DATABASE_URL;
 
 const pool = pgp({
   connectionString: string,

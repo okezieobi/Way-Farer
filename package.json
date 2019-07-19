@@ -17,8 +17,7 @@
     "start": "node api/dist/index.js",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "codeClimate": "nyc --reporter=lcov npm test",
-    "test": "mocha --require @babel/register test/test.js --exit",
-    "database for heroku": "cat api/src/migrations/heroku.sql | heroku pg:psql -a andela-way-farer HEROKU_POSTGRESQL_BROWN_URL"
+    "test": "mocha --require @babel/register test/test.js --exit"
   },
   "repository": {
     "type": "git",
@@ -64,6 +63,7 @@
     "regenerator-runtime": "^0.13.2",
     "swagger-jsdoc": "^3.3.0",
     "swagger-ui-express": "^4.0.7",
+    "underscore": "^1.9.1",
     "unique-random": "^2.1.0"
   },
   "heroku-run-build-script": true

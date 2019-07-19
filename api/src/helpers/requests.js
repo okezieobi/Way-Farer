@@ -1,5 +1,5 @@
 import regexTest from './regex';
-import errors from './errors';
+import { TitledErrors, UntitledErrors } from './errors';
 
 export default class RequestCheck {
   static checkRequest(request, testRequest, errRequired, errIsString, testErrMessage) {
@@ -21,16 +21,21 @@ export default class RequestCheck {
     return err;
   }
 
-  static checkAllErrors(request, title, test, error) {
-    let testErrMessage;
-    const isErrExceptions = error === 'notEmail'
-      || error === 'notPassword' || error === 'notNumberPlate' || error === 'notDate';
-    if (isErrExceptions) testErrMessage = errors[error]();
-    else testErrMessage = errors[error](title);
+  static procoessErrs(request, title, test, error) {
     const testRequest = regexTest[test](request);
-    const errIsRequired = errors.isRequired(title);
-    const errIsString = errors.isStringType(title);
-    return this.checkRequest(request, testRequest, errIsRequired, errIsString, testErrMessage);
+    const errIsRequired = TitledErrors.isRequired(title);
+    const errIsString = TitledErrors.isStringType(title);
+    return this.checkRequest(request, testRequest, errIsRequired, errIsString, error);
+  }
+
+  static checkAllErrors(request, title, test, error) {
+    const testErrMessage = TitledErrors[error](title);
+    return this.procoessErrs(request, title, test, testErrMessage);
+  }
+
+  static checkAllErrorsNoTitle(request, title, test, error) {
+    const testErrMessage = UntitledErrors[error]();
+    return this.procoessErrs(request, title, test, testErrMessage);
   }
 
   static validateLetters(request, title) {
@@ -38,11 +43,11 @@ export default class RequestCheck {
   }
 
   static checkEmailFormat(request, title) {
-    return this.checkAllErrors(request, title, 'validateEmail', 'notEmail');
+    return this.checkAllErrorsNoTitle(request, title, 'validateEmail', 'notEmail');
   }
 
   static checkPassword(request, title) {
-    return this.checkAllErrors(request, title, 'validatePassword', 'notPassword');
+    return this.checkAllErrorsNoTitle(request, title, 'validatePassword', 'notPassword');
   }
 
   static validateNumber(request, title) {
@@ -58,10 +63,10 @@ export default class RequestCheck {
   }
 
   static validateNumberPlate(request, title) {
-    return this.checkAllErrors(request, title, 'validateNumberPlate', 'notNumberPlate');
+    return this.checkAllErrorsNoTitle(request, title, 'validateNumberPlate', 'notNumberPlate');
   }
 
   static validateDate(request, title) {
-    return this.checkAllErrors(request, title, 'checkDateInput', 'notDate');
+    return this.checkAllErrorsNoTitle(request, title, 'checkDateInput', 'notDate');
   }
 }

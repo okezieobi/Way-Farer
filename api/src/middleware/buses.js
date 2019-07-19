@@ -6,15 +6,13 @@ import middleware from './middleware';
 export default class Buses {
   static create() {
     const validate = validateBusData.create.bind(validateBusData);
-    const authAll = authenticateUsers.authenticateAll.bind(authenticateUsers);
-    const authAdmin = authenticateUsers.admin.bind(authenticateUsers);
+    this.authAll = authenticateUsers.authenticateAll.bind(authenticateUsers);
+    this.authAdmin = authenticateUsers.admin.bind(authenticateUsers);
     const authNumberPlate = authenticateBusData.verifyNumberPlate.bind(authenticateBusData);
-    return middleware.routeCallbacks(validate, authAll, authAdmin, authNumberPlate);
+    return middleware.routeCallbacks(validate, this.authAll, this.authAdmin, authNumberPlate);
   }
 
   static getAll() {
-    const authAll = authenticateUsers.authenticateAll.bind(authenticateUsers);
-    const authAdmin = authenticateUsers.admin.bind(authenticateUsers);
-    return middleware.routeCallbacks(authAll, authAdmin);
+    return middleware.routeCallbacks(this.authAll, this.authAdmin);
   }
 }
