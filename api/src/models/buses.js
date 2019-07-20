@@ -50,7 +50,7 @@ export default class Buses {
 
   static busDataArray(array) {
     if (array) {
-      return commonModel.modifyArray(array, this.busDataRes);
+      return commonModel.modifyArray(array, Buses.busDataRes);
     }
     return array;
   }

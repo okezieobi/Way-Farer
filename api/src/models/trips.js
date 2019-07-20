@@ -51,7 +51,7 @@ export default class Trips {
 
   static tripDataArray(array) {
     if (array) {
-      return commonModel.modifyArray(array, this.tripDataRes);
+      return commonModel.modifyArray(array, Trips.tripDataRes);
     }
     return array;
   }
