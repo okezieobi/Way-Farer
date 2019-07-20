@@ -39,6 +39,10 @@ class TitledErrors {
   static dataFound(title) {
     return `${title} already exists`;
   }
+
+  static statusUpdateErr(title) {
+    return `Status is already ${title.toLowerCase()}`;
+  }
 }
 
 
@@ -97,6 +101,10 @@ class UntitledErrors {
 
   static notNumberPlate() {
     return 'Number plate must be capital letters and positive integers of exactly 8 characters';
+  }
+
+  static statusError() {
+    return 'Status must be active or cancelled';
   }
 }
 

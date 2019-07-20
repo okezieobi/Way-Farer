@@ -14,6 +14,10 @@ class TripQueries {
   static findTripById() {
     return 'SELECT * FROM trips WHERE id = $1';
   }
+
+  static updateTripById() {
+    return 'UPDATE trips SET status = $1 WHERE id = $2';
+  }
 }
 
 class UserQueries {

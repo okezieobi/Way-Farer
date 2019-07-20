@@ -17,4 +17,14 @@ export default class Trips {
     if (findErr) protocol.err400Res(res, findErr);
     else next();
   }
+
+  static updateStatus(req, res, next) {
+    const { tripId } = req.params;
+    const { status } = req.body;
+    const tripIdErr = checkRequest.validateInteger(tripId, 'Trip id');
+    const statusErr = checkRequest.validateLetters(status, 'Trip status');
+    const findErr = checkRequest.findError(tripIdErr, statusErr);
+    if (findErr) protocol.err400Res(res, findErr);
+    else next();
+  }
 }
