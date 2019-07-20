@@ -7,8 +7,10 @@ import { TripQueries } from '../helpers/queries';
 export default class Bookings {
   static async verifyTrip(req, res, next) {
     const { trip_id } = req.body;
+    const { tripId } = req.params;
+    const tripIdNo = tripId || trip_id;
     const findTripQuery = TripQueries.findTripById();
-    this.findTrip = await database.queryOneORNone(findTripQuery, [trip_id]);
+    this.findTrip = await database.queryOneORNone(findTripQuery, [tripIdNo]);
     if (!this.findTrip) protocol.err404Res(res, TitledErrors.dataNotFound('Trip data'));
     else next();
   }

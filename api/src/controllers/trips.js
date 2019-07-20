@@ -33,4 +33,12 @@ export default class Trips {
     const allTripsRes = await models.tripDataArray(allTrips);
     return protocol.success200Res(res, allTripsRes);
   }
+
+  static async updateStatus(req, res) {
+    const { tripId } = req.params;
+    const { status } = req.body;
+    const updateStatusQuery = TripQueries.updateTripById();
+    await database.queryNone(updateStatusQuery, [status, tripId]);
+    return protocol.success200ResMessage(res, `Trip status successfully updated to ${status.toLowerCase()}`);
+  }
 }
