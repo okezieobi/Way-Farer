@@ -4,12 +4,12 @@ import database from '../db/pgConnect';
 import { BookingQueries } from '../helpers/queries';
 import models from '../models/bookings';
 import authenticatedUser from '../auth/users';
-import authenticatedTrip from '../auth/bookings';
+import authenticatedBooking from '../auth/bookings';
 
 export default class Bookings {
   static async create(req, res) {
     const { findUser } = authenticatedUser;
-    const { findTrip } = authenticatedTrip;
+    const { findTrip } = authenticatedBooking;
     const { seats } = findTrip;
     const reqData = models.bookingsData(req.body, findUser.id, findTrip);
     const {
@@ -38,5 +38,13 @@ export default class Bookings {
     }
     const bookingsRes = models.bookingDataArray(bookings, findUser);
     return protocol.success200Res(res, bookingsRes);
+  }
+
+  static async deleteOne(req, res) {
+    const { findBooking } = authenticatedBooking;
+    const { id, user_id } = findBooking;
+    const deleteBookingQuery = BookingQueries.deleteBookingsByIdAndUserId();
+    await database.queryNone(deleteBookingQuery, [id, user_id]);
+    return protocol.success200ResMessage(res, 'Booking successfully deleted');
   }
 }

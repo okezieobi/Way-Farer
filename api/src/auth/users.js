@@ -39,7 +39,8 @@ export default class AuthenticateUsers {
     if (!token) return protocol.err400Res(res, UntitledErrors.tokenIsRequired());
     const verifyToken = await jwt.verify(token);
     // @ts-ignore
-    const { userId } = verifyToken;
+    const { userId, message, name } = verifyToken;
+    if (name || message) return protocol.err400Res(res, { name, message }); // jwt error
     const checkId = await test.checkInteger(userId);
     if (!checkId) return protocol.err400Res(res, UntitledErrors.invalidToken());
     this.findUser = await database.queryOneORNone(UserQueries.findUserById(), [userId]);

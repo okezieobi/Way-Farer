@@ -6,4 +6,6 @@ router.post('/bookings', bookingsMiddleware.create(), bookingsController.create.
 
 router.get('/bookings', bookingsMiddleware.getAll(), bookingsController.getAll.bind(bookingsController));
 
+router.delete('/bookings/:bookingId', bookingsMiddleware.deleteOne(), bookingsController.deleteOne.bind(bookingsController));
+
 export default router;

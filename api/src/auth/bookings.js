@@ -2,7 +2,8 @@
 import protocol from '../helpers/response';
 import database from '../db/pgConnect';
 import { UntitledErrors, TitledErrors } from '../helpers/errors';
-import { TripQueries } from '../helpers/queries';
+import { TripQueries, BookingQueries } from '../helpers/queries';
+import authenticatedUsers from './users';
 
 export default class Bookings {
   static async verifyTrip(req, res, next) {
@@ -23,5 +24,14 @@ export default class Bookings {
     const checkSeat = seats.find(seat => seat === parseInt(seat_no, 10));
     if (!checkSeat) return protocol.err400Res(res, TitledErrors.availableSeats(seats));
     return next();
+  }
+
+  static async verifyBookingId(req, res, next) {
+    const { bookingId } = req.params;
+    const { findUser } = authenticatedUsers;
+    const findBookingQuery = BookingQueries.findBookingsByIdAndUserId();
+    this.findBooking = await database.queryOneORNone(findBookingQuery, [bookingId, findUser.id]);
+    if (!this.findBooking) protocol.err404Res(res, TitledErrors.dataNotFound('Booking data'));
+    else next();
   }
 }
