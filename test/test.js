@@ -44,6 +44,7 @@ require('./trips/getAll');
 require('./bookings/createOne');
 require('./bookings/getAll');
 require('./trips/updateStatus');
+require('./bookings/deleteOne');
 
 export {
   expect,

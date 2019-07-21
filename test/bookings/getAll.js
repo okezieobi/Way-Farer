@@ -77,7 +77,7 @@ describe('Test endpoint with "/api/v1/bookings" to get all bookings by user id i
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Token is required, please sign in or sign up');
   });
 
-  it('Should not get all bookings at "api/v1/bookings" as an authenticated Client with GET if token does not match client', async () => {
+  it('Should not get all bookings at "api/v1/bookings" as an authenticated Client with GET if token does not match any user', async () => {
     const token = await Test.generateToken('1010101012222');
     const response = await chai.request(app).get('/api/v1/bookings').set('token', token);
     expect(response).to.have.status(404);
