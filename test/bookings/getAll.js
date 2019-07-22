@@ -112,6 +112,17 @@ describe('Test endpoint with "/api/v1/bookings" to get all bookings by user id i
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Id from token is not a positive integer');
   });
+
+  it('Should not get all trips at "api/v1/trips" as an authenticated Client with GET if token is invalid', async () => {
+    const token = 1010101010101;
+    const response = await chai.request(app).get('/api/v1/trips').set('token', token);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('object');
+    expect(response.body.error).to.have.property('name').to.be.a('string');
+    expect(response.body.error).to.have.property('message').to.be.a('string');
+  });
 });
 
 
@@ -218,5 +229,17 @@ describe('Test endpoint with "/api/v1/bookings" to get all bookings of users if 
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Id from token is not a positive integer');
+  });
+
+
+  it('Should not get all trips at "api/v1/trips" as an authenticated Admin with GET if token is invalid', async () => {
+    const token = 5050505050505;
+    const response = await chai.request(app).get('/api/v1/trips').set('token', token);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('object');
+    expect(response.body.error).to.have.property('name').to.be.a('string');
+    expect(response.body.error).to.have.property('message').to.be.a('string');
   });
 });

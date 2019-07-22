@@ -740,4 +740,22 @@ describe('Test endpoint at "api/v1/buses" that creates a bus data as an authenti
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Id from token is not a positive integer');
   });
+
+  it('Should not create a bus data at "api/v1/buses" as an authenticated Admin with POST if token is invalid', async () => {
+    const testData = {
+      number_plate: 'ERT99948',
+      manufacturer: 'toyota',
+      model: 'sienna',
+      year: '2010',
+      capacity: '8',
+    };
+    const token = 5050505050505;
+    const response = await chai.request(app).post('/api/v1/buses').set('token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('object');
+    expect(response.body.error).to.have.property('name').to.be.a('string');
+    expect(response.body.error).to.have.property('message').to.be.a('string');
+  });
 });

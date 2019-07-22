@@ -101,4 +101,16 @@ describe('Test endpoint at "/api/v1/bookings/:bookingId" to delete a booking as 
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Id from token is not a positive integer');
   });
+
+  it('Should not delete a booking at "/api/v1/bookngs/:bookingId" if token is invalid', async () => {
+    const token = 1010101010101;
+    const bookingId = 4040404040404;
+    const response = await chai.request(app).delete(`/api/v1/bookings/${bookingId}`).set('token', token);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.an('object');
+    expect(response.body.error).to.have.property('name').to.be.a('string');
+    expect(response.body.error).to.have.property('message').to.be.a('string');
+  });
 });
