@@ -25,11 +25,6 @@ describe('Test endpoint at "/api/v1/trips/:tripId" to update a trip status as an
     await pool.queryAny(Test.trips());
   });
 
-
-  before(async () => {
-    await pool.queryAny(Test.bookings());
-  });
-
   after(async () => {
     await pool.queryNone(Test.deleteData());
   });
@@ -114,16 +109,15 @@ describe('Test endpoint at "/api/v1/trips/:tripId" to update a trip status as an
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Status must be active or cancelled');
   });
 
-
-  it('Should not update a trip status at "/api/v1/trips/:tripId" as an authenticated Admin if status is an empty string', async () => {
+  it('Should not update a trip status at "/api/v1/trips/:tripId" as an authenticated Admin if status in request is same as trip status', async () => {
     const tripId = 3030303030303;
     const token = await Test.generateToken('5050505050505');
-    const status = '';
+    const status = 'Cancelled';
     const response = await chai.request(app).patch(`/api/v1/trips/${tripId}`).set('token', token).send({ status });
     expect(response).to.have.status(400);
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
-    expect(response.body).to.have.property('error').to.be.a('string').to.equal('Trip status is required');
+    expect(response.body).to.have.property('error').to.be.a('string').to.equal(`Status is already ${status.toLowerCase()}`);
   });
 
   it('Should not update a trip status at "/api/v1/trips/:tripId" as an authenticated Admin if trip id is not a number', async () => {
@@ -244,5 +238,18 @@ describe('Test endpoint at "/api/v1/trips/:tripId" to update a trip status as an
     expect(response.body).to.be.an('object');
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Id from token is not a positive integer');
+  });
+
+  it('Should not update a trip status at "/api/v1/trips/:tripId" as an authenticated Admin if token is invalid', async () => {
+    const tripId = 3030303030303;
+    const status = 'Cancelled';
+    const token = 5050505050505;
+    const response = await chai.request(app).patch(`/api/v1/trips/${tripId}`).set('token', token).send({ status });
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('object');
+    expect(response.body.error).to.have.property('name').to.be.a('string');
+    expect(response.body.error).to.have.property('message').to.be.a('string');
   });
 });

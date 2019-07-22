@@ -11,4 +11,11 @@ export default class Bookings {
     if (findErr) protocol.err400Res(res, findErr);
     else next();
   }
+
+  static deleteOne(req, res, next) {
+    const { bookingId } = req.params;
+    const bookingIdErr = checkRequest.validateInteger(bookingId, 'Booking id');
+    if (bookingIdErr) protocol.err400Res(res, bookingIdErr);
+    else next();
+  }
 }

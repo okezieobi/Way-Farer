@@ -78,6 +78,14 @@ class BookingQueries {
     return 'SELECT * FROM bookings';
   }
 
+  static findBookingsByIdAndUserId() {
+    return 'SELECT * FROM bookings WHERE id = $1 AND user_id = $2';
+  }
+
+  static deleteBookingsByIdAndUserId() {
+    return 'DELETE FROM bookings WHERE id = $1 AND user_id = $2';
+  }
+
   static async booking(db, createBookingArrayValue, tripSeatsArrayValue) {
     const createBookingQuery = 'INSERT INTO bookings(id, trip_id, user_id, seat_no, origin, destination, bus_id, trip_date, fare) VALUES ($1, $2, $3 , $4, $5, $6, $7, $8, $9) RETURNING *';
     const updateTripQuery = 'UPDATE trips SET seats = $1 WHERE id = $2';

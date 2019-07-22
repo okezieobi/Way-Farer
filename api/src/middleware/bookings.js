@@ -15,4 +15,10 @@ export default class Bookings {
   static getAll() {
     return middleware.routeCallbacks(this.authAll);
   }
+
+  static deleteOne() {
+    const validate = validateBooking.deleteOne.bind(validateBooking);
+    const authBooking = authenticateBooking.verifyBookingId.bind(authenticateBooking);
+    return middleware.routeCallbacks(validate, this.authAll, authBooking);
+  }
 }

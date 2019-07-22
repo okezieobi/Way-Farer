@@ -3,6 +3,7 @@ import models from '../models/trips';
 import { TripQueries } from '../helpers/queries';
 import protocol from '../helpers/response';
 import authenticatedBus from '../auth/trips';
+import mainController from './controller';
 
 export default class Trips {
   static createSeats(integer) {
@@ -29,9 +30,7 @@ export default class Trips {
 
   static async getAll(req, res) {
     const getAllTripsQuery = TripQueries.getAllTrips();
-    const allTrips = await database.queryAny(getAllTripsQuery);
-    const allTripsRes = await models.tripDataArray(allTrips);
-    return protocol.success200Res(res, allTripsRes);
+    await mainController.getAll(req, res, getAllTripsQuery, models.tripDataArray);
   }
 
   static async updateStatus(req, res) {

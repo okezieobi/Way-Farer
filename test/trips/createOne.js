@@ -701,4 +701,23 @@ describe('Test endpoint at "api/v1/trips" that creates a trip as an authenticate
     expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
     expect(response.body).to.have.property('error').to.be.a('string').to.equal('Id from token is not a positive integer');
   });
+
+
+  it('Should not create a trip at "api/v1/trips" as an authenticated Admin with POST if token is invalid', async () => {
+    const testData = {
+      bus_id: '2020202020202',
+      origin: 'Port Harcourt',
+      destination: 'Aba',
+      fare: '8',
+      trip_date: '2021/07/17',
+    };
+    const token = 5050505050505;
+    const response = await chai.request(app).post('/api/v1/trips').set('token', token).send(testData);
+    expect(response).to.have.status(400);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('status').to.be.a('number').to.equal(400);
+    expect(response.body).to.have.property('error').to.be.a('object');
+    expect(response.body.error).to.have.property('name').to.be.a('string');
+    expect(response.body.error).to.have.property('message').to.be.a('string');
+  });
 });

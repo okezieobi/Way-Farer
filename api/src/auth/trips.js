@@ -27,12 +27,12 @@ export default class {
   }
 
   static verifyTripStatus(req, res, next) {
-    const { verifyTrip } = authenticatedTrip;
+    const { findTrip } = authenticatedTrip;
     const { status } = req.body;
     const checkStatus = checkRequest.checkValue(status, UntitledErrors.statusError(), 'Active', 'Cancelled', 'active', 'cancelled');
     if (checkStatus) protocol.err400Res(res, checkStatus);
     // eslint-disable-next-line max-len
-    else if (status === verifyTrip.status) protocol.err400Res(res, TitledErrors.statusUpdateErr(status));
+    else if (status.toLowerCase() === findTrip.status.toLowerCase()) protocol.err400Res(res, TitledErrors.statusUpdateErr(status));
     else next();
   }
 }
