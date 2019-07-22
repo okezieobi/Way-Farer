@@ -41,7 +41,7 @@ class TitledErrors {
   }
 
   static statusUpdateErr(title) {
-    return `Status is already 4040404040404${title.toLowerCase()}`;
+    return `Status is already ${title.toLowerCase()}`;
   }
 }
 
