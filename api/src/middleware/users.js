@@ -19,4 +19,11 @@ export default class Users {
     const authPassword = authenticateUsers.verifyPassword.bind(authenticateUsers);
     return middleware.routeCallbacks(validateAll, authAll, authPassword);
   }
+
+  static authUsers() {
+    const authToken = authenticateUsers.authToken.bind(authenticateUsers);
+    const authAll = authenticateUsers.authenticateAll.bind(authenticateUsers);
+    const authAdmin = authenticateUsers.admin.bind(authenticateUsers);
+    return { authToken, authAll, authAdmin };
+  }
 }
