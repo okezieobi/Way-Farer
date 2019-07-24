@@ -1,18 +1,18 @@
 paths:
-  /auth/signin/:                # path of the user from your endpoint
+  /auth/signup/:                # path of the user from your endpoint
     post:                 # endpoint request type (post request)
       tags:               # Tag property
         - User            # Value of the tag
-      summary: signs in a registerd user
+      summary: signs up a new user
       produces:
       - application/json
       parameters:         # request parameters
       - in: body          # request body
         name: sigim up     # name of request, can be any name
-        description: It enables a user(client) to sign in
+        description: It enables a user(client) to sign up
         required: false   # can also be true depending on user preference
         schema:           # Schema definition
-          $ref: '#/definitions/signIn' 
+          $ref: '#/definitions/signUp' 
       responses:          # server responses
         201:
           description: An object with user details
@@ -20,12 +20,14 @@ definitions:        # Schema defination for request body
   signUp:
     type: object
     properties:
-          userFirsName:
+          first_name:
             type: string
-          userLastName:
+          last_name:
             type: string
-          userEmail:
+          email:
             type: string
-          userPassword:
+          username:
+            type: string
+          password:
             type: string
 
