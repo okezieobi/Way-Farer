@@ -1,0 +1,18 @@
+paths:
+  /bookings/{bookingId}:                # path of the user from your endpoint
+    delete:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - Booking            # Value of the tag
+      summary: Delete a booking as an authenticated User
+      security:
+          - ApiKeyAuth: []
+      parameters:
+        - name: bookingId
+          in: path
+          required: true
+          description: The ID of the booking to be deleted.
+          schema:
+            type: integer
+      responses:          # server responses
+        200:
+          description: An object with a success message

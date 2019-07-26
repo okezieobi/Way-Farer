@@ -1,0 +1,32 @@
+paths:
+  /buses/:                # path of the user from your endpoint
+    post:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - Bus            # Value of the tag
+      summary: create a new bus data as an authenticated Admin
+      security:
+       - ApiKeyAuth: []
+         requestBody:
+         required: true
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bus'
+      responses:          # server responses
+        201:
+          description: An object with bus details
+components:        # Schema definition for request body
+ schemas:
+  Bus:
+    type: object
+    properties:
+          number_plate:
+            type: string
+          manufacturer:
+            type: string
+          model:
+            type: string
+          year:
+            type: string
+          capacity:
+            type: string

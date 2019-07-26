@@ -1,0 +1,31 @@
+paths:
+  /trips/{tripId}:                # path of the user from your endpoint
+    patch:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - Trip            # Value of the tag
+      summary: Update trip status as an authenticated Admin
+      security:
+          - ApiKeyAuth: []
+      parameters:
+        - name: tripId
+          in: path
+          required: true
+          description: The ID of the trip status to be updated.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Status'
+      responses:          # server responses
+        200:
+          description: An object with a success message
+components:        # Schema definition for request body
+ schemas:
+  Status:
+    type: object
+    properties:
+          status:
+            type: string

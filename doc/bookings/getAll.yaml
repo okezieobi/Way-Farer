@@ -1,0 +1,11 @@
+paths:
+  /bookings/:                # path of the user from your endpoint
+    get:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - Booking            # Value of the tag
+      summary: get all booking as an authenticated User data
+      security:
+        - ApiKeyAuth: []
+      responses:          # server responses
+        200:
+          description: An array of objects with booking details
