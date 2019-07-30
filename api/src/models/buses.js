@@ -28,6 +28,13 @@ export default class Buses {
     };
   }
 
+  static postgresData(busReqData) {
+    const {
+      id, numberPlate, manufacturer, model, year, capacity,
+    } = this.busData(busReqData);
+    return commonModel.postgreValues(id, numberPlate, manufacturer, model, year, capacity);
+  }
+
   static numberPlateFormatter(string) {
     return `${string.substring(0, 3)}-${string.substring(3)}`;
   }

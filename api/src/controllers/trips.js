@@ -17,12 +17,8 @@ export default class Trips {
   static async create(req, res) {
     const { findBus } = authenticatedBus;
     const seats = this.createSeats(findBus.capacity);
-    const reqData = await models.tripData(req.body);
-    const {
-      tripId, busId, origin, destination, fare, tripDate,
-    } = reqData;
     const createTripQuery = TripQueries.createTrip();
-    const arrayData = [tripId, busId, origin, destination, fare, tripDate, seats];
+    const arrayData = [...models.postgresData(req.body), ...[seats]];
     const createTrip = await database.queryOne(createTripQuery, arrayData);
     const newTripRes = await models.tripDataRes(createTrip);
     return protocol.success201Res(res, newTripRes);

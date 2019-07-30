@@ -6,12 +6,8 @@ import mainController from './controller';
 
 export default class Buses {
   static async create(req, res) {
-    const reqData = await models.busData(req.body);
-    const {
-      id, numberPlate, manufacturer, model, year, capacity,
-    } = reqData;
     const createBusQuery = BusQueries.createBus();
-    const arrayData = [id, numberPlate, manufacturer, model, year, capacity];
+    const arrayData = models.postgresData(req.body);
     const newBusData = await database.queryOne(createBusQuery, arrayData);
     const newBusRes = await models.busDataRes(newBusData);
     return protocol.success201Res(res, newBusRes);

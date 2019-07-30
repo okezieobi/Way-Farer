@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import numbers from '../helpers/uniqueNos';
+import commonModel from './model';
 
 export default class Bookings {
   static commonData(data) {
@@ -10,10 +11,7 @@ export default class Bookings {
     };
   }
 
-  static bookingsData(data, userId, trip) {
-    const {
-      fare, origin, destination, bus_id, trip_date,
-    } = trip;
+  static bookingsData(data, userId) {
     const reqData = this.commonData(data);
     const { tripId, seatNo } = reqData;
     return {
@@ -21,18 +19,13 @@ export default class Bookings {
       tripId,
       userId: parseInt(userId, 10),
       seatNo,
-      origin: String(origin),
-      destination: String(destination),
-      busId: parseInt(bus_id, 10),
-      fare: parseInt(fare, 10),
-      tripDate: new Date(trip_date),
     };
   }
 
-  static bookingDataRes(data, user) {
-    const { first_name, last_name, email } = user;
+  static bookingDataRes(data) {
     const {
-      id, user_id, created_on, fare, origin, destination, bus_id, trip_date,
+      id, user_id, created_on, fare, origin, destination,
+      bus_id, trip_date, first_name, last_name, email,
     } = data;
     const resData = this.commonData(data);
     const { tripId, seatNo } = resData;
@@ -51,6 +44,13 @@ export default class Bookings {
       fare: parseFloat(fare),
       tripDate: new Date(trip_date),
     };
+  }
+
+  static postgresValues(data, user_id) {
+    const {
+      id, tripId, userId, seatNo,
+    } = this.bookingsData(data, user_id);
+    return commonModel.postgreValues(id, tripId, userId, seatNo);
   }
 
   static bookingDataArray(bookings, userData, tripData) {

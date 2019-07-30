@@ -1,0 +1,11 @@
+paths:
+  /trips/:                # path of the user from your endpoint
+    get:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - Trip            # Value of the tag
+      summary: get all trip data as an authenticated User
+      security:
+      - ApiKeyAuth: []
+      responses:          # server responses
+        200:
+          description: An array of objects with trip details

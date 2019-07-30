@@ -10,7 +10,8 @@ import bcrypt from '../helpers/bcrypt';
 export default class AuthenticateUsers {
   static async authEmailUsername(req) {
     const { username, email } = req.body;
-    const user = await UserQueries.users(database.pool, email, username);
+    const findUserQuery = UserQueries.findUserByEmailOrUsername();
+    const user = await database.queryOneORNone(findUserQuery, [email, username]);
     return user;
   }
 
@@ -34,7 +35,7 @@ export default class AuthenticateUsers {
     else next();
   }
 
-  static async authenticateAll(req, res, next) {
+  static async authToken(req, res, next) {
     const { token } = req.headers;
     if (!token) return protocol.err400Res(res, UntitledErrors.tokenIsRequired());
     const verifyToken = await jwt.verify(token);
@@ -43,14 +44,18 @@ export default class AuthenticateUsers {
     if (name || message) return protocol.err400Res(res, { name, message }); // jwt error
     const checkId = await test.checkInteger(userId);
     if (!checkId) return protocol.err400Res(res, UntitledErrors.invalidToken());
-    this.findUser = await database.queryOneORNone(UserQueries.findUserById(), [userId]);
+    this.user_id = userId;
+    return next();
+  }
+
+  static async authenticateAll(req, res, next) {
+    this.findUser = await database.queryOneORNone(UserQueries.findUserById(), [this.user_id]);
     if (!this.findUser) return protocol.err404Res(res, UntitledErrors.wrongToken());
     return next();
   }
 
   static admin(req, res, next) {
-    const { findUser } = this;
-    const { is_admin } = findUser;
+    const { is_admin } = this.findUser;
     if (!is_admin) protocol.err400Res(res, TitledErrors.restrictedAccess('admin'));
     else next();
   }

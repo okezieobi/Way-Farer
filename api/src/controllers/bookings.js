@@ -11,14 +11,10 @@ export default class Bookings {
     const { findUser } = authenticatedUser;
     const { findTrip } = authenticatedBooking;
     const { seats } = findTrip;
-    const reqData = models.bookingsData(req.body, findUser.id, findTrip);
-    const {
-      id, tripId, userId, seatNo, origin, destination, busId, fare, tripDate,
-    } = reqData;
-    const bookingArrayData = [id, tripId, userId, seatNo, origin,
-      destination, busId, tripDate, fare];
-    const updatedTripSeatData = seats.filter(seat => seatNo !== seat);
-    const newBooking = await BookingQueries.booking(database.pool, bookingArrayData,
+    const { seat_no } = req.body;
+    const bookingArrayData = models.postgresValues(req.body, findUser.id);
+    const updatedTripSeatData = seats.filter(seat => parseInt(seat_no, 10) !== seat);
+    const newBooking = await BookingQueries.createbooking(database.pool, bookingArrayData,
       [updatedTripSeatData, findTrip.id]);
     const newBookingRes = models.bookingDataRes(newBooking, findUser);
     return protocol.success201Res(res, newBookingRes);
@@ -42,9 +38,10 @@ export default class Bookings {
 
   static async deleteOne(req, res) {
     const { findBooking } = authenticatedBooking;
-    const { id, user_id } = findBooking;
-    const deleteBookingQuery = BookingQueries.deleteBookingsByIdAndUserId();
-    await database.queryNone(deleteBookingQuery, [id, user_id]);
+    const {
+      id, trip_id, user_id, seat_no,
+    } = findBooking;
+    await BookingQueries.deleteBooking(database.pool, [id, user_id], seat_no, trip_id);
     return protocol.success200ResMessage(res, 'Booking successfully deleted');
   }
 }

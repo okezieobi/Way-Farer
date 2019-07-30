@@ -1,13 +1,25 @@
 import swaggerJSDoc from 'swagger-jsdoc';
 
 const swaggerDefinition = {
+  openapi: '3.0.0',
   info: {
     title: 'REST API for Wayfarer', // Title of the documentation
     version: '1.0.0', // Version of the app
     description: 'This is the REST API for Wayfarer (a public bus transportation booking server.)', // short description of the app
   },
-  host: 'localhost:3000', // the host or url of the app
-  basePath: '/api/v1', // the basepath of your endpoint
+  servers: [
+    { url: 'http://localhost:3000/api/v1', description: 'Local development/testing server' },
+    { url: 'https://andela-way-farer.herokuapp.com/', description: 'Deployed server' },
+  ],
+  components: {
+    securitySchemes: {
+      ApiKeyAuth: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'token',
+      },
+    },
+  },
 };
 
 // options for the swagger docs

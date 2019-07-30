@@ -1,0 +1,39 @@
+paths:
+  /trips/:                # path of the user from your endpoint
+    post:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - Trip            # Value of the tag
+      summary: create a new trip data as an authenticated Admin
+      security:
+          - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Trip'
+      responses:          # server responses
+        201:
+          description: An object with trip details
+components:        # Schema definition for request body
+ schemas:
+  Trip:
+    type: object
+    properties:
+          bus_id:
+            type: string
+          origin:
+            type: string
+          destination:
+            type: string
+          fare:
+            type: string
+          trip_date:
+            type: string
+    required:
+      - bus_id
+      - origin
+      - destination
+      - fare
+      - trip_date
+

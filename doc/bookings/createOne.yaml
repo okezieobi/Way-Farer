@@ -1,0 +1,26 @@
+paths:
+  /bookings/:                # path of the user from your endpoint
+    post:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - Booking            # Value of the tag
+      summary: create a new booking data as an authenticated User
+      security:
+       - ApiKeyAuth: []
+         requestBody:
+         required: true
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:          # server responses
+        201:
+          description: An object with booking details
+components:        # Schema definition for request body
+ schemas:
+  Booking:
+    type: object
+    properties:
+          trip_id:
+            type: string
+          seat_no:
+            type: string

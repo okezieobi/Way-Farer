@@ -7,12 +7,8 @@ import { UserQueries } from '../helpers/queries';
 
 export default class Users {
   static async signUp(req, res) {
-    const reqData = await models.userDataPostgre(req.body);
-    const {
-      id, firstName, lastName, email, hashedPassword, username,
-    } = reqData;
     const createUserQuery = UserQueries.createClient();
-    const arrayData = [id, firstName, lastName, email, hashedPassword, username];
+    const arrayData = models.postgresData(req.body);
     const newUser = await database.queryOne(createUserQuery, arrayData);
     const signUpRes = await models.createUserDataResPostgre(newUser);
     const newToken = await token.generate(newUser.id);

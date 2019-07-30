@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import numbers from '../helpers/uniqueNos';
 import bcrypt from '../helpers/bcrypt';
+import model from './model';
 
 export default class Users {
   static userDataPostgre(data) {
@@ -15,6 +16,14 @@ export default class Users {
       lastName: last_name,
       hashedPassword: bcrypt.hash(password),
     };
+  }
+
+  static postgresData(userData) {
+    const {
+      id, firstName, lastName,
+      email, hashedPassword, username,
+    } = this.userDataPostgre(userData);
+    return model.postgreValues(id, firstName, lastName, email, hashedPassword, username);
   }
 
   static createUserDataResPostgre(data) {

@@ -49,6 +49,13 @@ export default class Trips {
     };
   }
 
+  static postgresData(tripReqData) {
+    const {
+      tripId, busId, origin, destination, fare, tripDate,
+    } = this.tripData(tripReqData);
+    return commonModel.postgreValues(tripId, busId, origin, destination, fare, tripDate);
+  }
+
   static tripDataArray(array) {
     if (array) {
       return commonModel.modifyArray(array, Trips.tripDataRes);
