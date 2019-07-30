@@ -10,7 +10,8 @@ import bcrypt from '../helpers/bcrypt';
 export default class AuthenticateUsers {
   static async authEmailUsername(req) {
     const { username, email } = req.body;
-    const user = await UserQueries.users(database.pool, email, username);
+    const findUserQuery = UserQueries.findUserByEmailOrUsername();
+    const user = await database.queryOneORNone(findUserQuery, [email, username]);
     return user;
   }
 

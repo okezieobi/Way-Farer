@@ -37,13 +37,8 @@ class UserQueries {
     return 'SELECT * FROM users WHERE username = $1';
   }
 
-  static async users(db, findUserByEmailValue, findUserByUsernameValue) {
-    const findUser = await db.task('findUser', async (t) => {
-      const byEmail = await t.oneOrNone(this.findClientByEmail, [findUserByEmailValue]);
-      const byUsername = await t.oneOrNone(this.findAdminByUsername, [findUserByUsernameValue]);
-      return byEmail || byUsername;
-    });
-    return findUser;
+  static findUserByEmailOrUsername() {
+    return 'SELECT * FROM users WHERE email = $1 OR username = $2';
   }
 }
 
@@ -66,10 +61,6 @@ class BusQueries {
 }
 
 class BookingQueries {
-  static findBookingByTripId() {
-    return 'SELECT * FROM bookings where trip_id = $1';
-  }
-
   static findBookingsByUserId() {
     return 'SELECT bookings.*, users.first_name, users.last_name, users.email, trips.bus_id, trips.origin, trips.destination, trips.fare, trips.trip_date FROM bookings INNER JOIN users ON bookings.user_id = users.id INNER JOIN trips on bookings.trip_id = trips.id WHERE users.id = $1';
   }
@@ -94,10 +85,13 @@ class BookingQueries {
     return 'UPDATE trips SET seats = $1 WHERE id = $2';
   }
 
+  static newBooking() {
+    return 'INSERT INTO bookings(id, trip_id, user_id, seat_no) VALUES ($1, $2, $3 , $4) RETURNING *';
+  }
+
   static async createbooking(db, createBookingArrayValue, tripSeatsArrayValue) {
-    const createBookingQuery = 'INSERT INTO bookings(id, trip_id, user_id, seat_no) VALUES ($1, $2, $3 , $4) RETURNING *';
     const newBooking = await db.task('createBooking', async (t) => {
-      const { id } = await t.one(createBookingQuery, createBookingArrayValue);
+      const { id } = await t.one(this.newBooking, createBookingArrayValue);
       await t.none(this.updateSeats, tripSeatsArrayValue);
       const bookingDetails = await t.one(this.getBookingById, [id]);
       return bookingDetails;
