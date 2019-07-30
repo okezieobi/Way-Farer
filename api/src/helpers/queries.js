@@ -71,11 +71,11 @@ class BookingQueries {
   }
 
   static findBookingsByUserId() {
-    return 'SELECT * FROM bookings where user_id = $1';
+    return 'SELECT bookings.*, users.first_name, users.last_name, users.email, trips.bus_id, trips.origin, trips.destination, trips.fare, trips.trip_date FROM bookings INNER JOIN users ON bookings.user_id = users.id INNER JOIN trips on bookings.trip_id = trips.id WHERE users.id = $1';
   }
 
   static findAllBookings() {
-    return 'SELECT * FROM bookings';
+    return 'SELECT bookings.*, users.first_name, users.last_name, users.email, trips.bus_id, trips.origin, trips.destination, trips.fare, trips.trip_date FROM bookings INNER JOIN users ON bookings.user_id = users.id INNER JOIN trips on bookings.trip_id = trips.id';
   }
 
   static findBookingsByIdAndUserId() {
@@ -86,15 +86,32 @@ class BookingQueries {
     return 'DELETE FROM bookings WHERE id = $1 AND user_id = $2';
   }
 
-  static async booking(db, createBookingArrayValue, tripSeatsArrayValue) {
-    const createBookingQuery = 'INSERT INTO bookings(id, trip_id, user_id, seat_no, origin, destination, bus_id, trip_date, fare) VALUES ($1, $2, $3 , $4, $5, $6, $7, $8, $9) RETURNING *';
-    const updateTripQuery = 'UPDATE trips SET seats = $1 WHERE id = $2';
+  static getBookingById() {
+    return 'SELECT bookings.*, users.first_name, users.last_name, users.email, trips.bus_id, trips.origin, trips.destination, trips.fare, trips.trip_date FROM bookings INNER JOIN users ON bookings.user_id = users.id INNER JOIN trips on bookings.trip_id = trips.id WHERE bookings.id = $1';
+  }
+
+  static updateSeats() {
+    return 'UPDATE trips SET seats = $1 WHERE id = $2';
+  }
+
+  static async createbooking(db, createBookingArrayValue, tripSeatsArrayValue) {
+    const createBookingQuery = 'INSERT INTO bookings(id, trip_id, user_id, seat_no) VALUES ($1, $2, $3 , $4) RETURNING *';
     const newBooking = await db.task('createBooking', async (t) => {
-      const createBooking = await t.one(createBookingQuery, createBookingArrayValue);
-      await t.none(updateTripQuery, tripSeatsArrayValue);
-      return createBooking;
+      const { id } = await t.one(createBookingQuery, createBookingArrayValue);
+      await t.none(this.updateSeats, tripSeatsArrayValue);
+      const bookingDetails = await t.one(this.getBookingById, [id]);
+      return bookingDetails;
     });
     return newBooking;
+  }
+
+  static async deleteBooking(db, deleteBookingArray, bookingSeat, bookingTripId) {
+    await db.task('deletingBooking', async (t) => {
+      await t.none(this.deleteBookingsByIdAndUserId, deleteBookingArray);
+      const { seats } = await t.one(TripQueries.findTripById(), [bookingTripId]);
+      await seats.push(bookingSeat);
+      await t.none(this.updateSeats, [seats, bookingTripId]);
+    });
   }
 }
 

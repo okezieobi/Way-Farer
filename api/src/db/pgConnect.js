@@ -20,6 +20,7 @@ const pool = pgp({
 
 
 export default {
+  result: (text, params, callback, thisArgs) => pool.result(text, params, callback, thisArgs),
   queryOneORNone: (text, params) => pool.oneOrNone(text, params),
   queryAny: (text, params) => pool.any(text, params),
   queryOne: (text, params) => pool.one(text, params),
