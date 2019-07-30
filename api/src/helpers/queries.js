@@ -21,20 +21,12 @@ class TripQueries {
 }
 
 class UserQueries {
-  static findClientByEmail() {
-    return 'SELECT * FROM users WHERE email = $1';
-  }
-
   static findUserById() {
     return 'SELECT * FROM users WHERE id = $1';
   }
 
   static createClient() {
     return 'INSERT INTO users(id, first_name, last_name, email, password, username) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, first_name, last_name, email, type, username';
-  }
-
-  static findAdminByUsername() {
-    return 'SELECT * FROM users WHERE username = $1';
   }
 
   static findUserByEmailOrUsername() {
@@ -101,7 +93,7 @@ class BookingQueries {
 
   static async deleteBooking(db, deleteBookingArray, bookingSeat, bookingTripId) {
     await db.task('deletingBooking', async (t) => {
-      await t.none(this.deleteBookingsByIdAndUserId, deleteBookingArray);
+      await t.result(this.deleteBookingsByIdAndUserId, deleteBookingArray);
       const { seats } = await t.one(TripQueries.findTripById(), [bookingTripId]);
       await seats.push(bookingSeat);
       await t.none(this.updateSeats, [seats, bookingTripId]);
