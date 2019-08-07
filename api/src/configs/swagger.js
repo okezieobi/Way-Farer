@@ -8,8 +8,8 @@ const swaggerDefinition = {
     description: 'This is the REST API for Wayfarer (a public bus transportation booking server.)', // short description of the app
   },
   servers: [
+    { url: 'https://andela-way-farer.herokuapp.com/api/v1', description: 'Deployed server' },
     { url: 'http://localhost:3000/api/v1', description: 'Local development/testing server' },
-    { url: 'https://andela-way-farer.herokuapp.com/', description: 'Deployed server' },
   ],
   components: {
     securitySchemes: {
